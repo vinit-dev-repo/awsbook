@@ -1,0 +1,316 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  The AWS tutorial's one-time set-up (the user's D1, D2 and D4 rulings of 2026-10-04): the IAM user awsbook under a
+  permissions boundary that keeps it inside the two regions and away from the account, the bill and the big-ticket
+  services, and the monthly budget alarm. Applied once, by hand, with the author's own administrator identity. It
+  creates no access key and no password: the author sets both in the console afterwards.
+
+Parameters:
+  AlertEmail:
+    Type: String
+    Description: Where the budget alerts go (50, 80 and 100 percent of the limit, and a forecast past 100 percent)
+    AllowedPattern: '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+  MonthlyLimitUsd:
+    Type: Number
+    Description: The book's monthly cap in USD (D4)
+    Default: 40
+    MinValue: 1
+
+Resources:
+  Boundary:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: awsbook-permissions-boundary
+      Description: The most the user awsbook may ever do, whatever policies it carries
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowTheBooksWork
+            Effect: Allow
+            Action: '*'
+            Resource: '*'
+          - Sid: StayInTheTwoRegions
+            Effect: Deny
+            NotAction:
+              - iam:*
+              - sts:*
+              - cloudfront:*
+              - route53:*
+              - route53domains:*
+              - globalaccelerator:*
+              - wafv2:*
+              - waf:*
+              - shield:*
+              - budgets:*
+              - ce:*
+              - cur:*
+              - organizations:*
+              - account:*
+              - support:*
+              - health:*
+              - trustedadvisor:*
+              - s3:ListAllMyBuckets
+              - s3:GetBucketLocation
+              - s3:CreateBucket
+              - tag:*
+              - resource-groups:*
+              - access-analyzer:*
+              - pricing:*
+              - servicequotas:*
+              - artifact:*
+              - iq:*
+              - importexport:*
+              - ecr-public:*
+              - sso:*
+              - sso-directory:*
+              - identitystore:*
+              - signin:*
+              - cloudshell:*
+              - q:*
+              - codewhisperer:*
+              - chatbot:*
+              - notifications:*
+              - freetier:*
+              - billing:*
+              - invoicing:*
+              - payments:*
+              - tax:*
+              - consolidatedbilling:*
+              - savingsplans:*
+              - kms:*
+              - ec2:DescribeRegions
+              - ec2:DescribeAvailabilityZones
+              - cloudformation:ListStacks
+              - cloudformation:DescribeStacks
+              - lambda:ListFunctions
+              - apigateway:GET
+            Resource: '*'
+            Condition:
+              StringNotEquals:
+                aws:RequestedRegion:
+                  - us-east-1
+                  - ap-south-1
+          - Sid: NeverTouchTheAccountOrTheBill
+            Effect: Deny
+            Action:
+              - account:CloseAccount
+              - account:PutAlternateContact
+              - account:DeleteAlternateContact
+              - account:PutContactInformation
+              - account:EnableRegion
+              - account:DisableRegion
+              - organizations:CloseAccount
+              - organizations:CreateAccount
+              - organizations:LeaveOrganization
+              - organizations:DeleteOrganization
+              - organizations:InviteAccountToOrganization
+              - organizations:RemoveAccountFromOrganization
+              - billing:Update*
+              - payments:*
+              - invoicing:*
+              - tax:*
+              - cur:*
+              - ce:*
+              - purchase-orders:*
+              - support:*
+              - savingsplans:CreateSavingsPlan
+              - ec2:PurchaseReservedInstancesOffering
+              - ec2:PurchaseHostReservation
+              - ec2:PurchaseScheduledInstances
+              - ec2:ModifyReservedInstances
+              - ec2:CreateReservedInstancesListing
+              - rds:PurchaseReservedDBInstancesOffering
+              - elasticache:PurchaseReservedCacheNodesOffering
+              - redshift:PurchaseReservedNodeOffering
+              - dynamodb:PurchaseReservedCapacityOfferings
+              - route53domains:RegisterDomain
+              - route53domains:TransferDomain
+              - route53domains:RenewDomain
+              - acm-pca:CreateCertificateAuthority
+              - directconnect:CreateConnection
+              - directconnect:CreateInterconnect
+              - directconnect:CreateLag
+              - directconnect:AllocateHostedConnection
+              - snowball:*
+              - outposts:CreateOrder
+              - shield:CreateSubscription
+              - aws-marketplace:Subscribe
+              - aws-marketplace-management:*
+              - workmail:*
+              - chime:*
+              - connect:*
+              - deadline:*
+            Resource: '*'
+          # budgets:ModifyBudget is the one action behind CreateBudget, UpdateBudget AND DeleteBudget (probe ch02b, 2026-10-05):
+          # a chapter may make and remove a budget NAMED by its key; the book's own alarm and the author's budgets are untouchable
+          - Sid: OnlyTheChaptersOwnBudgets
+            Effect: Deny
+            Action:
+              - budgets:ModifyBudget
+              - budgets:CreateBudgetAction
+              - budgets:DeleteBudgetAction
+              - budgets:UpdateBudgetAction
+            NotResource:
+              - !Sub 'arn:${AWS::Partition}:budgets::${AWS::AccountId}:budget/awsbook-ch*'
+              - !Sub 'arn:${AWS::Partition}:budgets::${AWS::AccountId}:budget/awsbook-probe-*'
+              - !Sub 'arn:${AWS::Partition}:budgets::${AWS::AccountId}:budget/awsbook-selftest*'
+          - Sid: NeverEscapeTheBoundary
+            Effect: Deny
+            Action:
+              - iam:DeleteUserPermissionsBoundary
+              - iam:DeleteRolePermissionsBoundary
+            Resource: '*'
+          - Sid: NeverChangeTheBoundaryItself
+            Effect: Deny
+            Action:
+              - iam:CreatePolicyVersion
+              - iam:DeletePolicy
+              - iam:DeletePolicyVersion
+              - iam:SetDefaultPolicyVersion
+            Resource: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/awsbook-permissions-boundary'
+          - Sid: NeverChangeTheBooksOwnUser
+            Effect: Deny
+            Action:
+              - iam:AttachUserPolicy
+              - iam:DetachUserPolicy
+              - iam:PutUserPolicy
+              - iam:DeleteUserPolicy
+              - iam:PutUserPermissionsBoundary
+              - iam:CreateAccessKey
+              - iam:UpdateAccessKey
+              - iam:DeleteAccessKey
+              - iam:CreateLoginProfile
+              - iam:UpdateLoginProfile
+              - iam:DeleteLoginProfile
+              - iam:DeactivateMFADevice
+              - iam:DeleteVirtualMFADevice
+              - iam:ResyncMFADevice
+              - iam:AddUserToGroup
+              - iam:DeleteUser
+              - iam:UpdateUser
+              - iam:TagUser
+              - iam:UntagUser
+            Resource: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:user/awsbook'
+          # A new IAM USER must carry this boundary too (the IAM chapter teaches that). A new ROLE need not: roles are what
+          # every chapter makes for Lambda, EC2, ECS, EKS and pipelines, and the tools that make them (CloudFormation,
+          # eksctl, the console wizards) do not set a boundary (measured 2026-10-05 00:5x: the sweep self-test's
+          # create-role was denied by the first version of this statement).
+          - Sid: EveryNewUserCarriesTheBoundary
+            Effect: Deny
+            Action:
+              - iam:CreateUser
+              - iam:PutUserPermissionsBoundary
+            Resource: '*'
+            Condition:
+              StringNotEquals:
+                iam:PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/awsbook-permissions-boundary'
+          - Sid: OnlyBookNamedPrincipalsAndNeverTheAuthorsOnes
+            Effect: Deny
+            Action:
+              - iam:CreateUser
+              - iam:DeleteUser
+              - iam:UpdateUser
+              - iam:CreateRole
+              - iam:DeleteRole
+              - iam:UpdateRole
+              - iam:UpdateAssumeRolePolicy
+              - iam:AttachRolePolicy
+              - iam:DetachRolePolicy
+              - iam:PutRolePolicy
+              - iam:DeleteRolePolicy
+              - iam:AttachUserPolicy
+              - iam:DetachUserPolicy
+              - iam:PutUserPolicy
+              - iam:DeleteUserPolicy
+              - iam:CreateGroup
+              - iam:DeleteGroup
+              - iam:AttachGroupPolicy
+              - iam:DetachGroupPolicy
+              - iam:PutGroupPolicy
+              - iam:DeleteGroupPolicy
+              - iam:CreatePolicy
+              - iam:DeletePolicy
+              - iam:CreateInstanceProfile
+              - iam:DeleteInstanceProfile
+              - iam:CreateAccessKey
+              - iam:DeleteAccessKey
+              - iam:CreateLoginProfile
+              - iam:DeleteLoginProfile
+            NotResource:
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:user/awsbook-*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/awsbook-*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:group/awsbook-*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/awsbook-*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:instance-profile/awsbook-*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/aws-service-role/*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/service-role/awsbook-*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/eksctl-awsbook-*'
+              - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-*'
+
+  BookUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: awsbook
+      PermissionsBoundary: !Ref Boundary
+      ManagedPolicyArns:
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AdministratorAccess'
+      Tags:
+        - Key: awsbook
+          Value: awsbook-bootstrap
+
+  Budget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: awsbook-book-monthly-budget
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: !Ref MonthlyLimitUsd
+          Unit: USD
+        CostTypes:
+          IncludeCredit: false
+          IncludeRefund: false
+          UseAmortized: false
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 50
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref AlertEmail
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 80
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref AlertEmail
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 100
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref AlertEmail
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: 100
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref AlertEmail
+
+Outputs:
+  UserName:
+    Description: The book's IAM user; set its console password, MFA device and one access key in the console
+    Value: !Ref BookUser
+  BoundaryName:
+    Value: awsbook-permissions-boundary
+  BudgetName:
+    Value: awsbook-book-monthly-budget
