@@ -17,12 +17,12 @@ The files the chapter **10 - EC2 basics - launching and reaching an instance** o
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `user-data.sh` | Launching an instance: the CLI, the console and a stack › With the CLI (line 414) |  |
-| `web-stack.yaml` | Launching an instance: the CLI, the console and a stack › With CloudFormation (line 506) |  |
-| `eice-stack.yaml` | Reaching the instance: SSH, Instance Connect and the endpoint › With CloudFormation (line 914) |  |
-| `trust-ec2.json` | Inside the instance: the metadata service, user data and the instance role › With the CLI (line 1069) |  |
-| `on-instance.sh` | Inside the instance: the metadata service, user data and the instance role › With the CLI (line 1122) |  |
-| `role-stack.yaml` | Inside the instance: the metadata service, user data and the instance role › With CloudFormation (line 1152) |  |
-| `net-stack.yaml` | Addresses and interfaces: public, Elastic and a second card › With CloudFormation (line 1390) |  |
-| `ex-user-data.sh` | Try it yourself (line 1795) |  |
-| `ex-meta.sh` | Try it yourself (line 1860) |  |
+| `user-data.sh` | Launching an instance: the CLI, the console and a stack › With the CLI (line 422) |  |
+| `web-stack.yaml` | Launching an instance: the CLI, the console and a stack › With CloudFormation (line 514) |  |
+| `eice-stack.yaml` | Reaching the instance: SSH, Instance Connect and the endpoint › With CloudFormation (line 922) |  |
+| `trust-ec2.json` | Inside the instance: the metadata service, user data and the instance role › With the CLI (line 1077) |  |
+| `on-instance.sh` | Inside the instance: the metadata service, user data and the instance role › With the CLI (line 1130) |  |
+| `role-stack.yaml` | Inside the instance: the metadata service, user data and the instance role › With CloudFormation (line 1160) |  |
+| `net-stack.yaml` | Addresses and interfaces: public, Elastic and a second card › With CloudFormation (line 1398) |  |
+| `ex-user-data.sh` | Try it yourself (line 1803) |  |
+| `ex-meta.sh` | Try it yourself (line 1868) |  |

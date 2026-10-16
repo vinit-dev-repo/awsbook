@@ -1,0 +1,167 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: The compute catalogue stack of this book
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  SubnetA:
+    Type: AWS::EC2::Subnet::Id
+  SubnetB:
+    Type: AWS::EC2::Subnet::Id
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+  Bundle:
+    Type: String
+    Default: nano_3_0
+Resources:
+  Server:
+    Type: AWS::Lightsail::Instance
+    Properties:
+      InstanceName: !Sub '${Key}-stack-web'
+      AvailabilityZone: us-east-1a
+      BlueprintId: nginx
+      BundleId: !Ref Bundle
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${Key}-stack-exec'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Service: ecs-tasks.amazonaws.com}
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  ComputeEnvironment:
+    Type: AWS::Batch::ComputeEnvironment
+    Properties:
+      ComputeEnvironmentName: !Sub '${Key}-stack-fargate'
+      Type: MANAGED
+      State: ENABLED
+      ComputeResources:
+        Type: FARGATE
+        MaxvCpus: 2
+        Subnets: [!Ref SubnetA, !Ref SubnetB]
+        SecurityGroupIds: [!Ref SecurityGroup]
+      Tags:
+        awsbook: !Ref Key
+  JobQueue:
+    Type: AWS::Batch::JobQueue
+    Properties:
+      JobQueueName: !Sub '${Key}-stack-queue'
+      State: ENABLED
+      Priority: 10
+      ComputeEnvironmentOrder:
+        - Order: 1
+          ComputeEnvironment: !Ref ComputeEnvironment
+      Tags:
+        awsbook: !Ref Key
+  JobDefinition:
+    Type: AWS::Batch::JobDefinition
+    Properties:
+      JobDefinitionName: !Sub '${Key}-stack-hello'
+      Type: container
+      PlatformCapabilities: [FARGATE]
+      ContainerProperties:
+        Image: public.ecr.aws/docker/library/busybox:1.36
+        Command: [sh, -c, 'echo hello from the stack']
+        ExecutionRoleArn: !GetAtt ExecutionRole.Arn
+        ResourceRequirements:
+          - {Type: VCPU, Value: '0.25'}
+          - {Type: MEMORY, Value: '512'}
+        NetworkConfiguration:
+          AssignPublicIp: ENABLED
+      Tags:
+        awsbook: !Ref Key
+  Application:
+    Type: AWS::AppConfig::Application
+    Properties:
+      Name: !Sub '${Key}-stack-app'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Environment:
+    Type: AWS::AppConfig::Environment
+    Properties:
+      ApplicationId: !Ref Application
+      Name: !Sub '${Key}-stack-prod'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Profile:
+    Type: AWS::AppConfig::ConfigurationProfile
+    Properties:
+      ApplicationId: !Ref Application
+      Name: !Sub '${Key}-stack-flags'
+      LocationUri: hosted
+      Type: AWS.AppConfig.FeatureFlags
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  SigningProfile:
+    Type: AWS::Signer::SigningProfile
+    Properties:
+      PlatformId: AWSLambda-SHA384-ECDSA
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  MailSet:
+    Type: AWS::SES::ConfigurationSet
+    Properties:
+      Name: !Sub '${Key}-stack-set'
+  Queue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub '${Key}-stack-iot'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  RuleRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${Key}-stack-iot-rule'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Service: iot.amazonaws.com}
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: send
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: sqs:SendMessage
+                Resource: !GetAtt Queue.Arn
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  TopicRule:
+    Type: AWS::IoT::TopicRule
+    Properties:
+      RuleName: awsbook_ch20_stack_rule
+      TopicRulePayload:
+        Sql: "SELECT * FROM 'awsbook/ch20/stack'"
+        AwsIotSqlVersion: '2016-03-23'
+        RuleDisabled: false
+        Actions:
+          - Sqs:
+              QueueUrl: !Ref Queue
+              RoleArn: !GetAtt RuleRole.Arn
+              UseBase64: false
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+Outputs:
+  QueueUrl:
+    Value: !Ref Queue
+  Profile:
+    Value: !GetAtt SigningProfile.ProfileName

@@ -16,14 +16,14 @@ The files the chapter **18 - High availability and scalability patterns** of the
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `trust-ec2.json` | The baseline that survives a zone › With the CLI (line 194) |  |
-| `user-data.sh` | The baseline that survives a zone › With the CLI (line 264) |  |
-| `lt.json` | The baseline that survives a zone › With the CLI (line 280) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `baseline-fragment.yaml` | The baseline that survives a zone › With CloudFormation (line 379) |  |
-| `rq.json` | Scaling on the right signal › With the CLI (line 503) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `bl.json` | Scaling on the right signal › With the CLI (line 552) |  |
-| `mm.json` | Scaling on the right signal › With the CLI (line 617) |  |
-| `scaling-fragment.yaml` | Scaling on the right signal › With CloudFormation (line 668) |  |
-| `plan.json` | One plan for many resources › With the CLI (line 740) |  |
-| `plan-fragment.yaml` | One plan for many resources › With CloudFormation (line 800) |  |
-| `alarm-fragment.yaml` | When it does not scale › With CloudFormation (line 1067) |  |
+| `trust-ec2.json` | The baseline that survives a zone › With the CLI (line 202) |  |
+| `user-data.sh` | The baseline that survives a zone › With the CLI (line 272) |  |
+| `lt.json` | The baseline that survives a zone › With the CLI (line 288) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `baseline-fragment.yaml` | The baseline that survives a zone › With CloudFormation (line 387) |  |
+| `rq.json` | Scaling on the right signal › With the CLI (line 511) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `bl.json` | Scaling on the right signal › With the CLI (line 560) |  |
+| `mm.json` | Scaling on the right signal › With the CLI (line 625) |  |
+| `scaling-fragment.yaml` | Scaling on the right signal › With CloudFormation (line 676) |  |
+| `plan.json` | One plan for many resources › With the CLI (line 748) |  |
+| `plan-fragment.yaml` | One plan for many resources › With CloudFormation (line 808) |  |
+| `alarm-fragment.yaml` | When it does not scale › With CloudFormation (line 1075) |  |

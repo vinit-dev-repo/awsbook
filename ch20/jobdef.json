@@ -1,0 +1,8 @@
+{
+  "image": "public.ecr.aws/docker/library/busybox:1.36",
+  "command": ["sh", "-c", "echo hello from batch job \$AWS_BATCH_JOB_ID; sleep 5; echo done"],
+  "executionRoleArn": "arn:aws:iam::$ACCOUNT_ID:role/awsbook-ch20-batch-exec",
+  "resourceRequirements": [{"type": "VCPU", "value": "0.25"}, {"type": "MEMORY", "value": "512"}],
+  "networkConfiguration": {"assignPublicIp": "ENABLED"},
+  "fargatePlatformConfiguration": {"platformVersion": "LATEST"}
+}

@@ -1,0 +1,1 @@
+[{"connectorType": "S3", "destinationConnectorProperties": {"S3": {"bucketName": "awsbook-ch20-flow-$ACCOUNT_ID", "bucketPrefix": "dest", "s3OutputFormatConfig": {"fileType": "CSV", "aggregationConfig": {"aggregationType": "None"}}}}}]

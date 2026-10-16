@@ -1,0 +1,1 @@
+{"sql": "SELECT topic() AS topic, temperature, timestamp() AS at FROM 'awsbook/ch20/telemetry' WHERE temperature > 30", "awsIotSqlVersion": "2016-03-23", "ruleDisabled": false, "actions": [{"sqs": {"queueUrl": "$IOT_QUEUE_URL", "roleArn": "arn:aws:iam::$ACCOUNT_ID:role/awsbook-ch20-iot-rule", "useBase64": false}}]}

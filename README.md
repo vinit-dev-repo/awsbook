@@ -36,7 +36,7 @@ A folder appears here when its chapter is certified (every command run three tim
 | `ch17` | Auto Scaling Groups | [yes](ch17/) |
 | `ch18` | High availability and scalability patterns | [yes](ch18/) |
 | `ch19` | Elastic Beanstalk and the Spring Boot sample application | [yes](ch19/) |
-| `ch20` | The compute catalogue - Batch, Lightsail, Outposts, Wavelength, WorkSpaces and the rest | not yet |
+| `ch20` | The compute catalogue - Batch, Lightsail, Outposts, Wavelength, WorkSpaces and the rest | [yes](ch20/) |
 
 ## Part III - Containers and Serverless on AWS
 

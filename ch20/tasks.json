@@ -1,0 +1,3 @@
+[{"sourceFields": ["name", "city"], "taskType": "Filter", "connectorOperator": {"S3": "PROJECTION"}},
+ {"sourceFields": ["name"], "destinationField": "name", "taskType": "Map", "connectorOperator": {"S3": "NO_OP"}},
+ {"sourceFields": ["city"], "destinationField": "city", "taskType": "Map", "connectorOperator": {"S3": "NO_OP"}}]

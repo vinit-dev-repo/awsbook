@@ -17,7 +17,7 @@ The files the chapter **13 - Instance storage - EBS and EFS** of the AWS tutoria
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `ebs-stack.yaml` | EBS volumes: make, attach, format, mount › With CloudFormation (line 435) |  |
-| `trust-dlm.json` | Snapshots: copies, moves, lifecycle and the Recycle Bin › With the CLI (line 733) |  |
-| `dlm-policy.json` | Snapshots: copies, moves, lifecycle and the Recycle Bin › With the CLI (line 763) |  |
-| `efs-stack.yaml` | EFS: one file system for many instances across zones › With CloudFormation (line 1452) |  |
+| `ebs-stack.yaml` | EBS volumes: make, attach, format, mount › With CloudFormation (line 443) |  |
+| `trust-dlm.json` | Snapshots: copies, moves, lifecycle and the Recycle Bin › With the CLI (line 741) |  |
+| `dlm-policy.json` | Snapshots: copies, moves, lifecycle and the Recycle Bin › With the CLI (line 771) |  |
+| `efs-stack.yaml` | EFS: one file system for many instances across zones › With CloudFormation (line 1460) |  |

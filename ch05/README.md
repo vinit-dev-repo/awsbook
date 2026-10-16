@@ -17,5 +17,5 @@ The files the chapter **05 - The wider AWS service catalogue** of the AWS tutori
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `catalogue.yaml` | Email: Amazon SES › With CloudFormation (line 543) | the chapter adds to it in later blocks |
-| `ex-stack.yaml` | Try it yourself (line 1568) |  |
+| `catalogue.yaml` | Email: Amazon SES › With CloudFormation (line 551) | the chapter adds to it in later blocks |
+| `ex-stack.yaml` | Try it yourself (line 1576) |  |

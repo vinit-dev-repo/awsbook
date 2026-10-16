@@ -17,15 +17,15 @@ The files the chapter **12 - EC2 at architect level** of the AWS tutorial writes
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `cards.sh` | Network interfaces: the second card, the move and the failover › With the CLI (line 563) |  |
-| `net-stack.yaml` | Network interfaces: the second card, the move and the failover › With CloudFormation (line 728) |  |
-| `trust-ec2.json` | The metadata service at architect level › With the CLI (line 924) |  |
-| `meta.sh` | The metadata service at architect level › With the CLI (line 1001) |  |
-| `token.sh` | The metadata service at architect level › With the CLI (line 1069) |  |
-| `off.sh` | The metadata service at architect level › With the CLI (line 1090) |  |
-| `require-imdsv2.json` | The metadata service at architect level › With the CLI (line 1123) |  |
-| `template-stack.yaml` | The metadata service at architect level › With CloudFormation (line 1229) |  |
-| `eic-stack.yaml` | EC2 Instance Connect from the inside › With CloudFormation (line 1470) |  |
-| `fleet.json` | EC2 Fleet: capacity across types and zones › With the CLI (line 1605) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `part.sh` | Placement, hibernate and recovery: the architect's reading › With the CLI (line 1789) |  |
-| `ex-hops.json` | Try it yourself (line 2010) |  |
+| `cards.sh` | Network interfaces: the second card, the move and the failover › With the CLI (line 571) |  |
+| `net-stack.yaml` | Network interfaces: the second card, the move and the failover › With CloudFormation (line 736) |  |
+| `trust-ec2.json` | The metadata service at architect level › With the CLI (line 932) |  |
+| `meta.sh` | The metadata service at architect level › With the CLI (line 1009) |  |
+| `token.sh` | The metadata service at architect level › With the CLI (line 1077) |  |
+| `off.sh` | The metadata service at architect level › With the CLI (line 1098) |  |
+| `require-imdsv2.json` | The metadata service at architect level › With the CLI (line 1131) |  |
+| `template-stack.yaml` | The metadata service at architect level › With CloudFormation (line 1237) |  |
+| `eic-stack.yaml` | EC2 Instance Connect from the inside › With CloudFormation (line 1478) |  |
+| `fleet.json` | EC2 Fleet: capacity across types and zones › With the CLI (line 1613) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `part.sh` | Placement, hibernate and recovery: the architect's reading › With the CLI (line 1797) |  |
+| `ex-hops.json` | Try it yourself (line 2018) |  |

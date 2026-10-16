@@ -17,9 +17,9 @@ The files the chapter **16 - Elastic Load Balancing** of the AWS tutorial writes
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `user-data.sh` | Target groups and health checks › With the CLI (line 296) |  |
-| `transform.json` | An Application Load Balancer and its listener rules › With the CLI (line 685) |  |
-| `alb-stack.yaml` | An Application Load Balancer and its listener rules › With CloudFormation (line 754) |  |
-| `log-policy.json` | Stickiness, cross-zone, headers, timeouts, logs and a zonal shift › With the CLI (line 1132) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `jwt-actions.json` | HTTPS at the load balancer › With the CLI (line 1504) |  |
-| `nlb-stack.yaml` | A Network Load Balancer › With CloudFormation (line 1784) |  |
+| `user-data.sh` | Target groups and health checks › With the CLI (line 304) |  |
+| `transform.json` | An Application Load Balancer and its listener rules › With the CLI (line 693) |  |
+| `alb-stack.yaml` | An Application Load Balancer and its listener rules › With CloudFormation (line 762) |  |
+| `log-policy.json` | Stickiness, cross-zone, headers, timeouts, logs and a zonal shift › With the CLI (line 1140) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `jwt-actions.json` | HTTPS at the load balancer › With the CLI (line 1512) |  |
+| `nlb-stack.yaml` | A Network Load Balancer › With CloudFormation (line 1792) |  |

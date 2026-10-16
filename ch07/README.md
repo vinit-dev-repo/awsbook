@@ -17,11 +17,11 @@ The files the chapter **07 - IAM roles, policy evaluation and STS** of the AWS t
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `trust.json` | What a role is › With the CLI (line 76) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `trust-ext.json` | The confused deputy and the external id › With the CLI (line 339) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `trust-lambda.json` | Roles for services, PassRole and instance profiles › With the CLI (line 745) |  |
-| `roles-stack.yaml` | Roles for services, PassRole and instance profiles › With CloudFormation (line 810) |  |
-| `trust-ra.json` | IAM Roles Anywhere › With the CLI (line 1058) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `ra-stack.yaml` | IAM Roles Anywhere › With CloudFormation (line 1097) |  |
-| `trust-ex.json` | Try it yourself (line 1255) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `ec2-stack.yaml` | Try it yourself (line 1298) |  |
+| `trust.json` | What a role is › With the CLI (line 84) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `trust-ext.json` | The confused deputy and the external id › With the CLI (line 347) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `trust-lambda.json` | Roles for services, PassRole and instance profiles › With the CLI (line 753) |  |
+| `roles-stack.yaml` | Roles for services, PassRole and instance profiles › With CloudFormation (line 818) |  |
+| `trust-ra.json` | IAM Roles Anywhere › With the CLI (line 1066) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `ra-stack.yaml` | IAM Roles Anywhere › With CloudFormation (line 1105) |  |
+| `trust-ex.json` | Try it yourself (line 1263) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `ec2-stack.yaml` | Try it yourself (line 1306) |  |

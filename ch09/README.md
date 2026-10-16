@@ -17,9 +17,9 @@ The files the chapter **09 - Advanced identity - Organizations, IAM Identity Cen
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `deny-s3.json` | Organizations, organizational units and policies › With the CLI (line 358) |  |
-| `saml-metadata.xml` | Federation into AWS: SAML, OIDC and identity brokers › With the CLI (line 815) |  |
-| `trust-cognito.json` | Cognito identity pools › With the CLI (line 1311) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `scp-deny-s3.json` | Identity at scale: boundaries, Access Analyzer, RAM and cross-account access › With the CLI (line 1642) |  |
-| `identity-stack.yaml` | Identity at scale: boundaries, Access Analyzer, RAM and cross-account access › With CloudFormation (line 1736) |  |
-| `ex-share.yaml` | Try it yourself (line 2053) |  |
+| `deny-s3.json` | Organizations, organizational units and policies › With the CLI (line 366) |  |
+| `saml-metadata.xml` | Federation into AWS: SAML, OIDC and identity brokers › With the CLI (line 823) |  |
+| `trust-cognito.json` | Cognito identity pools › With the CLI (line 1319) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `scp-deny-s3.json` | Identity at scale: boundaries, Access Analyzer, RAM and cross-account access › With the CLI (line 1650) |  |
+| `identity-stack.yaml` | Identity at scale: boundaries, Access Analyzer, RAM and cross-account access › With CloudFormation (line 1744) |  |
+| `ex-share.yaml` | Try it yourself (line 2061) |  |

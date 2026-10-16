@@ -17,17 +17,17 @@ The files the chapter **08 - The CLI and the SDKs** of the AWS tutorial writes i
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `trust-lambda.json` | A Lambda function from the CLI › With the CLI (line 878) |  |
-| `hello.py` | A Lambda function from the CLI › With the CLI (line 1006) | rewritten later in the chapter |
-| `payload.json` | A Lambda function from the CLI › With the CLI (line 989) | written with echo |
-| `fn-stack.yaml` | A Lambda function from the CLI › With CloudFormation (line 1071) |  |
-| `list_regions.py` | The same work from an SDK: boto3 › With the CLI (line 1224) |  |
-| `invoke.py` | The same work from an SDK: boto3 › With the CLI (line 1245) |  |
-| `err.py` | The same work from an SDK: boto3 › With the CLI (line 1262) |  |
-| `retries.py` | The same work from an SDK: boto3 › With the CLI (line 1282) |  |
-| `note.txt` | S3 from the CLI and the SDK, and a presigned URL › With the CLI (line 1324) | written with echo |
-| `s3_demo.py` | S3 from the CLI and the SDK, and a presigned URL › With the CLI (line 1359) |  |
-| `bucket-stack.yaml` | S3 from the CLI and the SDK, and a presigned URL › With CloudFormation (line 1394) |  |
-| `ex-fn-stack.yaml` | Try it yourself (line 1597) |  |
-| `ex_invoke.py` | Try it yourself (line 1655) |  |
-| `ex-note.txt` | Try it yourself (line 1673) | written with echo |
+| `trust-lambda.json` | A Lambda function from the CLI › With the CLI (line 886) |  |
+| `hello.py` | A Lambda function from the CLI › With the CLI (line 1014) | rewritten later in the chapter |
+| `payload.json` | A Lambda function from the CLI › With the CLI (line 997) | written with echo |
+| `fn-stack.yaml` | A Lambda function from the CLI › With CloudFormation (line 1079) |  |
+| `list_regions.py` | The same work from an SDK: boto3 › With the CLI (line 1232) |  |
+| `invoke.py` | The same work from an SDK: boto3 › With the CLI (line 1253) |  |
+| `err.py` | The same work from an SDK: boto3 › With the CLI (line 1270) |  |
+| `retries.py` | The same work from an SDK: boto3 › With the CLI (line 1290) |  |
+| `note.txt` | S3 from the CLI and the SDK, and a presigned URL › With the CLI (line 1332) | written with echo |
+| `s3_demo.py` | S3 from the CLI and the SDK, and a presigned URL › With the CLI (line 1367) |  |
+| `bucket-stack.yaml` | S3 from the CLI and the SDK, and a presigned URL › With CloudFormation (line 1402) |  |
+| `ex-fn-stack.yaml` | Try it yourself (line 1606) |  |
+| `ex_invoke.py` | Try it yourself (line 1664) |  |
+| `ex-note.txt` | Try it yourself (line 1682) | written with echo |

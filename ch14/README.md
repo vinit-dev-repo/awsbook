@@ -16,11 +16,11 @@ The files the chapter **14 - Machine images** of the AWS tutorial writes in its 
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `user-data.sh` | Making an image: with a reboot, without a reboot, and from a snapshot › With the CLI (line 252) |  |
-| `launch-stack.yaml` | Launching from an image and moving an instance between zones › With CloudFormation (line 444) |  |
-| `approved-ami.json` | Retiring an image: deprecate, disable, deregister, the Recycle Bin and approved images › With the CLI (line 867) |  |
-| `approved-ami-one.json` | Retiring an image: deprecate, disable, deregister, the Recycle Bin and approved images › With the CLI (line 901) |  |
-| `trust-ec2.json` | EC2 Image Builder: a pipeline that builds, tests and distributes an image › With the CLI (line 1077) |  |
-| `page-component.yaml` | EC2 Image Builder: a pipeline that builds, tests and distributes an image › With the CLI (line 1108) |  |
-| `builder-stack.yaml` | EC2 Image Builder: a pipeline that builds, tests and distributes an image › With CloudFormation (line 1260) |  |
-| `ex-component.yaml` | Try it yourself (line 1644) |  |
+| `user-data.sh` | Making an image: with a reboot, without a reboot, and from a snapshot › With the CLI (line 260) |  |
+| `launch-stack.yaml` | Launching from an image and moving an instance between zones › With CloudFormation (line 452) |  |
+| `approved-ami.json` | Retiring an image: deprecate, disable, deregister, the Recycle Bin and approved images › With the CLI (line 875) |  |
+| `approved-ami-one.json` | Retiring an image: deprecate, disable, deregister, the Recycle Bin and approved images › With the CLI (line 909) |  |
+| `trust-ec2.json` | EC2 Image Builder: a pipeline that builds, tests and distributes an image › With the CLI (line 1085) |  |
+| `page-component.yaml` | EC2 Image Builder: a pipeline that builds, tests and distributes an image › With the CLI (line 1116) |  |
+| `builder-stack.yaml` | EC2 Image Builder: a pipeline that builds, tests and distributes an image › With CloudFormation (line 1268) |  |
+| `ex-component.yaml` | Try it yourself (line 1652) |  |

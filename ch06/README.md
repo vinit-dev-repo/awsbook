@@ -16,8 +16,8 @@ The files the chapter **06 - IAM basics - users, groups, policies, MFA and the r
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `team.yaml` | Users › With CloudFormation (line 247) |  |
-| `list-buckets.json` | Policies › With the CLI (line 434) |  |
-| `v2.json` | Policies › With the CLI (line 518) |  |
-| `totp.py` | MFA on an IAM user › With the CLI (line 768) |  |
-| `analyzer.yaml` | IAM Access Analyzer › With CloudFormation (line 1031) |  |
+| `team.yaml` | Users › With CloudFormation (line 255) |  |
+| `list-buckets.json` | Policies › With the CLI (line 442) |  |
+| `v2.json` | Policies › With the CLI (line 526) |  |
+| `totp.py` | MFA on an IAM user › With the CLI (line 776) |  |
+| `analyzer.yaml` | IAM Access Analyzer › With CloudFormation (line 1039) |  |

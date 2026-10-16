@@ -17,14 +17,14 @@ The files the chapter **15 - Managing instances at scale with Systems Manager** 
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `trust-ec2.json` | What Systems Manager is and what a managed node needs › With the CLI (line 146) |  |
-| `trust-ssm.json` | What Systems Manager is and what a managed node needs › With the CLI (line 189) |  |
-| `hello.yaml` | Run Command and documents › With the CLI (line 342) |  |
-| `doc-stack.yaml` | Run Command and documents › With CloudFormation (line 500) |  |
-| `prefs.json` | Session Manager › With the CLI (line 784) |  |
-| `state-doc.yaml` | State Manager, Inventory and Compliance › With the CLI (line 917) |  |
-| `assoc-stack.yaml` | State Manager, Inventory and Compliance › With CloudFormation (line 997) |  |
-| `patching-stack.yaml` | Patch Manager and Maintenance Windows › With CloudFormation (line 1229) |  |
-| `param-stack.yaml` | Parameter Store › With CloudFormation (line 1511) |  |
-| `trust-hybrid.json` | Distributor, OpsCenter and nodes outside EC2 › With the CLI (line 1699) |  |
-| `ex-runbook.yaml` | Try it yourself (line 2039) |  |
+| `trust-ec2.json` | What Systems Manager is and what a managed node needs › With the CLI (line 154) |  |
+| `trust-ssm.json` | What Systems Manager is and what a managed node needs › With the CLI (line 197) |  |
+| `hello.yaml` | Run Command and documents › With the CLI (line 350) |  |
+| `doc-stack.yaml` | Run Command and documents › With CloudFormation (line 508) |  |
+| `prefs.json` | Session Manager › With the CLI (line 792) |  |
+| `state-doc.yaml` | State Manager, Inventory and Compliance › With the CLI (line 925) |  |
+| `assoc-stack.yaml` | State Manager, Inventory and Compliance › With CloudFormation (line 1005) |  |
+| `patching-stack.yaml` | Patch Manager and Maintenance Windows › With CloudFormation (line 1237) |  |
+| `param-stack.yaml` | Parameter Store › With CloudFormation (line 1519) |  |
+| `trust-hybrid.json` | Distributor, OpsCenter and nodes outside EC2 › With the CLI (line 1707) |  |
+| `ex-runbook.yaml` | Try it yourself (line 2047) |  |

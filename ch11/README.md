@@ -17,7 +17,7 @@ The files the chapter **11 - EC2 purchasing options, Spot, placement groups and 
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `trust-ec2.json` | Placement groups: cluster, spread and partition › With the CLI (line 550) |  |
-| `placement-stack.yaml` | Status checks, instance health and recovery › With CloudFormation (line 868) | rewritten later in the chapter |
-| `cw-config.json` | CloudWatch for EC2: metrics, detailed monitoring, the agent and a custom metric › With the CLI (line 1051) |  |
-| `ex-stack.yaml` | Try it yourself (line 1452) |  |
+| `trust-ec2.json` | Placement groups: cluster, spread and partition › With the CLI (line 558) |  |
+| `placement-stack.yaml` | Status checks, instance health and recovery › With CloudFormation (line 876) | rewritten later in the chapter |
+| `cw-config.json` | CloudWatch for EC2: metrics, detailed monitoring, the agent and a custom metric › With the CLI (line 1059) |  |
+| `ex-stack.yaml` | Try it yourself (line 1460) |  |
