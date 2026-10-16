@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A Lambda function with its role
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  FnRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${Key}-stack-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Fn:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${Key}-stack-hello'
+      Runtime: python3.13
+      Handler: index.handler
+      Role: !GetAtt FnRole.Arn
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              name = event.get("name", "world")
+              return {"greeting": f"hello, {name}"}
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+Outputs:
+  FunctionArn:
+    Value: !GetAtt Fn.Arn

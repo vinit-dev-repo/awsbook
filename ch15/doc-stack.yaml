@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: One Command document with a parameter
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  Hello:
+    Type: AWS::SSM::Document
+    Properties:
+      Name: !Sub '${Key}-hello-stack'
+      DocumentType: Command
+      DocumentFormat: YAML
+      Content:
+        schemaVersion: '2.2'
+        description: Print a greeting from the stack
+        parameters:
+          Greeting:
+            type: String
+            default: hello
+        mainSteps:
+          - action: aws:runShellScript
+            name: greet
+            inputs:
+              runCommand:
+                - echo "{{ Greeting }} from the stack"
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

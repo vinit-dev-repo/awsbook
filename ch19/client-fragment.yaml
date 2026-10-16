@@ -1,0 +1,17 @@
+ClientGroup:
+  Type: AWS::EC2::SecurityGroup
+  Properties:
+    GroupName: !Sub '${Key}-db-client'
+    GroupDescription: instances that may reach the database
+    VpcId: !Ref VpcId
+    Tags:
+      - Key: awsbook
+        Value: !Ref Key
+DatabaseRule:
+  Type: AWS::EC2::SecurityGroupIngress
+  Properties:
+    GroupId: !Ref DatabaseGroup
+    IpProtocol: tcp
+    FromPort: 5432
+    ToPort: 5432
+    SourceSecurityGroupId: !Ref ClientGroup

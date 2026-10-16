@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A patch baseline and a maintenance window with one scan task
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  Baseline:
+    Type: AWS::SSM::PatchBaseline
+    Properties:
+      Name: !Sub '${Key}-baseline-stack'
+      OperatingSystem: AMAZON_LINUX_2023
+      Description: Security patches a week after release
+      ApprovalRules:
+        PatchRules:
+          - ApproveAfterDays: 7
+            ComplianceLevel: UNSPECIFIED
+            PatchFilterGroup:
+              PatchFilters:
+                - Key: CLASSIFICATION
+                  Values:
+                    - Security
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Window:
+    Type: AWS::SSM::MaintenanceWindow
+    Properties:
+      Name: !Sub '${Key}-window-stack'
+      Schedule: 'cron(0 4 ? * SUN 2099)'
+      Duration: 2
+      Cutoff: 1
+      AllowUnassociatedTargets: true
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Target:
+    Type: AWS::SSM::MaintenanceWindowTarget
+    Properties:
+      WindowId: !Ref Window
+      Name: !Sub '${Key}-targets-stack'
+      ResourceType: INSTANCE
+      Targets:
+        - Key: tag:awsbook
+          Values:
+            - !Ref Key
+  Task:
+    Type: AWS::SSM::MaintenanceWindowTask
+    Properties:
+      WindowId: !Ref Window
+      Name: !Sub '${Key}-scan-stack'
+      TaskType: RUN_COMMAND
+      TaskArn: AWS-RunPatchBaseline
+      Priority: 1
+      MaxConcurrency: '1'
+      MaxErrors: '0'
+      Targets:
+        - Key: WindowTargetIds
+          Values:
+            - !Ref Target
+      TaskInvocationParameters:
+        MaintenanceWindowRunCommandParameters:
+          Parameters:
+            Operation:
+              - Scan

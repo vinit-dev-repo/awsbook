@@ -1,0 +1,1 @@
+web: java -Duser.timezone=UTC -jar worker.jar

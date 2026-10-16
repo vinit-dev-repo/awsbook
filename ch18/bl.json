@@ -1,0 +1,1 @@
+{"TargetValue": 20.0, "CustomizedMetricSpecification": {"MetricName": "BacklogPerInstance", "Namespace": "awsbook/ch18", "Dimensions": [{"Name": "AutoScalingGroupName", "Value": "awsbook-ch18-asg"}], "Statistic": "Average", "Unit": "None"}}

@@ -1,0 +1,1 @@
+{"TargetValue": 100.0, "PredefinedMetricSpecification": {"PredefinedMetricType": "ALBRequestCountPerTarget", "ResourceLabel": "$LB_LABEL/$TG_LABEL"}}

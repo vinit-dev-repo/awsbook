@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A second function with 512 MB
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  ExRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${Key}-ex-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  ExFn:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${Key}-ex-hello'
+      Runtime: python3.13
+      Handler: index.handler
+      MemorySize: 512
+      Role: !GetAtt ExRole.Arn
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              name = event.get("name", "world")
+              return {"greeting": f"hello, {name}"}
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

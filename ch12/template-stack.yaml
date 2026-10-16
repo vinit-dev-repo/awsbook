@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A launch template that requires metadata version 2
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  LatestAmi:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+Resources:
+  Template:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Sub '${Key}-stack-lt'
+      TagSpecifications:
+        - ResourceType: launch-template
+          Tags:
+            - Key: awsbook
+              Value: !Ref Key
+      LaunchTemplateData:
+        ImageId: !Ref LatestAmi
+        InstanceType: t3.micro
+        MetadataOptions:
+          HttpTokens: required
+          HttpPutResponseHopLimit: 1
+          InstanceMetadataTags: enabled
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: !Sub '${Key}-stack-fleet'
+              - Key: awsbook
+                Value: !Ref Key
+          - ResourceType: volume
+            Tags:
+              - Key: awsbook
+                Value: !Ref Key

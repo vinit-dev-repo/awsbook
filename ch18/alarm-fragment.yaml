@@ -1,0 +1,17 @@
+UnhealthyAlarm:
+  Type: AWS::CloudWatch::Alarm
+  Properties:
+    AlarmName: !Sub '${Key}-unhealthy'
+    Namespace: AWS/ApplicationELB
+    MetricName: UnHealthyHostCount
+    Dimensions:
+      - Name: LoadBalancer
+        Value: !GetAtt LoadBalancer.LoadBalancerFullName
+      - Name: TargetGroup
+        Value: !GetAtt TargetGroup.TargetGroupFullName
+    Statistic: Minimum
+    Period: 60
+    EvaluationPeriods: 1
+    Threshold: 0
+    ComparisonOperator: GreaterThanThreshold
+    TreatMissingData: notBreaching

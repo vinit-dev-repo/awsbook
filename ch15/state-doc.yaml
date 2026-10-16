@@ -1,0 +1,9 @@
+schemaVersion: '2.2'
+description: Keep a marker file in place
+mainSteps:
+  - action: aws:runShellScript
+    name: marker
+    inputs:
+      runCommand:
+        - mkdir -p /opt/awsbook
+        - echo "kept by State Manager" > /opt/awsbook/state.txt

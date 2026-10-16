@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Two topics for the exercise
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  TopicOne:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub '${Key}-ex-topic-one'
+  TopicTwo:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub '${Key}-ex-topic-two'
+Outputs:
+  TopicOneArn:
+    Value: !Ref TopicOne
+  TopicTwoArn:
+    Value: !Ref TopicTwo

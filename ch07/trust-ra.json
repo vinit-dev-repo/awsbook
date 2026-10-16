@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": { "Service": "rolesanywhere.amazonaws.com" },
+      "Action": ["sts:AssumeRole", "sts:TagSession", "sts:SetSourceIdentity"],
+      "Condition": {
+        "ArnEquals": { "aws:SourceArn": "arn:aws:rolesanywhere:us-east-1:$ACCOUNT_ID:trust-anchor/$ANCHOR" },
+        "StringEquals": { "aws:PrincipalTag/x509Issuer/CN": "awsbook-ch07-ca", "aws:PrincipalTag/x509Subject/CN": "awsbook-ch07-workload" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+Group:
+  Type: AWS::AutoScaling::AutoScalingGroup
+  UpdatePolicy:
+    AutoScalingInstanceRefresh:
+      Strategy: Rolling
+      Preferences:
+        MinHealthyPercentage: 100
+        MaxHealthyPercentage: 150
+        InstanceWarmup: 60
+        SkipMatching: false

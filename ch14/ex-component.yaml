@@ -1,0 +1,11 @@
+name: awsbook ex check
+description: Checks that the shell works
+schemaVersion: 1.0
+phases:
+  - name: validate
+    steps:
+      - name: ShellWorks
+        action: ExecuteBash
+        inputs:
+          commands:
+            - echo ok

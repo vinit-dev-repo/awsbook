@@ -1,0 +1,1 @@
+[{"Type": "url-rewrite", "UrlRewriteConfig": {"Rewrites": [{"Regex": "^/old/(.*)$", "Replace": "/api/$1"}]}}]

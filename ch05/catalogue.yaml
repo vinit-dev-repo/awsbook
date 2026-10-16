@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: The catalogue stack of this book
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  MailIdentity:
+    Type: AWS::SES::EmailIdentity
+    Properties:
+      EmailIdentity: !Sub '${Key}-stack@example.com'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Site:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: !Sub '${Key}-stack-site'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Sensor:
+    Type: AWS::IoT::Thing
+    Properties:
+      ThingName: !Sub '${Key}-stack-sensor'
+  SensorPolicy:
+    Type: AWS::IoT::Policy
+    Properties:
+      PolicyName: !Sub '${Key}-stack-policy'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: iot:Connect
+            Resource: '*'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Portfolio:
+    Type: AWS::ServiceCatalog::Portfolio
+    Properties:
+      DisplayName: !Sub '${Key}-stack-portfolio'
+      ProviderName: the book
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: One String parameter
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  Greeting:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub '/book/${Key}/stack/greeting'
+      Type: String
+      Value: hello from the stack
+      Description: A String parameter made by a stack
+      Tags:
+        awsbook: !Ref Key

@@ -1,0 +1,2 @@
+[{"Type": "jwt-validation", "JwtValidationConfig": {"JwksEndpoint": "https://issuer.example.test/.well-known/jwks.json", "Issuer": "https://issuer.example.test"}, "Order": 1},
+ {"Type": "forward", "TargetGroupArn": "TARGET_GROUP_ARN", "Order": 2}]

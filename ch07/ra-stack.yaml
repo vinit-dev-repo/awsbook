@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A Roles Anywhere trust anchor and profile
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  CaPem:
+    Type: String
+Resources:
+  Anchor:
+    Type: AWS::RolesAnywhere::TrustAnchor
+    Properties:
+      Name: !Sub '${Key}-anchor-stack'
+      Enabled: true
+      Source:
+        SourceType: CERTIFICATE_BUNDLE
+        SourceData:
+          X509CertificateData: !Ref CaPem
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Profile:
+    Type: AWS::RolesAnywhere::Profile
+    Properties:
+      Name: !Sub '${Key}-profile-stack'
+      Enabled: true
+      RoleArns:
+        - !Sub 'arn:aws:iam::${AWS::AccountId}:role/${Key}-lambda'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

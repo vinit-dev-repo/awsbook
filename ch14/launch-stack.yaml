@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: One instance launched from the chapter image
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  ImageId:
+    Type: AWS::EC2::Image::Id
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+  GroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+Resources:
+  FromImage:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref ImageId
+      InstanceType: t3.micro
+      SubnetId: !Ref SubnetId
+      SecurityGroupIds:
+        - !Ref GroupId
+      PropagateTagsToVolumeOnCreation: true
+      MetadataOptions:
+        HttpTokens: required
+      Tags:
+        - Key: Name
+          Value: !Sub '${Key}-stack-copy'
+        - Key: awsbook
+          Value: !Ref Key

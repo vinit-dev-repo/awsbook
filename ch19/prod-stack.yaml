@@ -1,0 +1,102 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Chapter 19 - the production environment of the movie service
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  SolutionStack:
+    Type: String
+  DbHost:
+    Type: String
+  ParameterArn:
+    Type: String
+  ClientSecurityGroup:
+    Type: String
+  VpcId:
+    Type: String
+  SubnetA:
+    Type: String
+  SubnetB:
+    Type: String
+Resources:
+  Prod:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      ApplicationName: !Ref Key
+      EnvironmentName: !Sub '${Key}-prod'
+      CNAMEPrefix: !Sub '${Key}-prod'
+      SolutionStackName: !Ref SolutionStack
+      VersionLabel: v1
+      Tier:
+        Name: WebServer
+        Type: Standard
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+      OptionSettings:
+        - Namespace: aws:ec2:vpc
+          OptionName: VPCId
+          Value: !Ref VpcId
+        - Namespace: aws:ec2:vpc
+          OptionName: Subnets
+          Value: !Sub '${SubnetA},${SubnetB}'
+        - Namespace: aws:ec2:vpc
+          OptionName: ELBSubnets
+          Value: !Sub '${SubnetA},${SubnetB}'
+        - Namespace: aws:ec2:vpc
+          OptionName: AssociatePublicIpAddress
+          Value: "true"
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: EnvironmentType
+          Value: LoadBalanced
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: LoadBalancerType
+          Value: application
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: ServiceRole
+          Value: !Sub '${Key}-service-role'
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: IamInstanceProfile
+          Value: !Sub '${Key}-ec2-profile'
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: SecurityGroups
+          Value: !Ref ClientSecurityGroup
+        - Namespace: aws:ec2:instances
+          OptionName: InstanceTypes
+          Value: t3.micro
+        - Namespace: aws:autoscaling:asg
+          OptionName: MinSize
+          Value: "2"
+        - Namespace: aws:autoscaling:asg
+          OptionName: MaxSize
+          Value: "4"
+        - Namespace: aws:elasticbeanstalk:healthreporting:system
+          OptionName: SystemType
+          Value: enhanced
+        - Namespace: aws:elasticbeanstalk:application
+          OptionName: Application Healthcheck URL
+          Value: /actuator/health
+        - Namespace: aws:elasticbeanstalk:environment:process:default
+          OptionName: HealthCheckPath
+          Value: /actuator/health
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: SERVER_PORT
+          Value: "5000"
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: RDS_HOSTNAME
+          Value: !Ref DbHost
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: RDS_PORT
+          Value: "5432"
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: RDS_DB_NAME
+          Value: ebdb
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: RDS_USERNAME
+          Value: ebroot
+        - Namespace: aws:elasticbeanstalk:application:environmentsecrets
+          OptionName: RDS_PASSWORD
+          Value: !Ref ParameterArn
+Outputs:
+  Endpoint:
+    Value: !GetAtt Prod.EndpointURL

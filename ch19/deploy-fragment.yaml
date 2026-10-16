@@ -1,0 +1,12 @@
+VersionTwo:
+  Type: AWS::ElasticBeanstalk::ApplicationVersion
+  Properties:
+    ApplicationName: !Ref Key
+    SourceBundle:
+      S3Bucket: !Ref BundleBucket
+      S3Key: movie-v2.zip
+Dev:
+  Type: AWS::ElasticBeanstalk::Environment
+  Properties:
+    ApplicationName: !Ref Key
+    VersionLabel: !Ref VersionTwo

@@ -1,0 +1,4 @@
+{"ImageId": "$AMI_ID", "InstanceType": "t3.micro", "SecurityGroupIds": ["$WEB_SG"], "IamInstanceProfile": {"Name": "awsbook-ch18-profile"},
+ "MetadataOptions": {"HttpTokens": "required", "HttpEndpoint": "enabled"}, "Monitoring": {"Enabled": true}, "UserData": "$USER_DATA",
+ "TagSpecifications": [{"ResourceType": "instance", "Tags": [{"Key": "awsbook", "Value": "awsbook-ch18"}, {"Key": "Name", "Value": "awsbook-ch18-web"}]},
+                       {"ResourceType": "volume", "Tags": [{"Key": "awsbook", "Value": "awsbook-ch18"}]}]}

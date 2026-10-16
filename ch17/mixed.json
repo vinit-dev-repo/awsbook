@@ -1,0 +1,2 @@
+{"LaunchTemplate": {"LaunchTemplateSpecification": {"LaunchTemplateId": "$LT_ID", "Version": "2"}, "Overrides": [{"InstanceType": "t3.micro"}, {"InstanceType": "t3a.micro"}, {"InstanceType": "t3.small"}]},
+ "InstancesDistribution": {"OnDemandBaseCapacity": 0, "OnDemandPercentageAboveBaseCapacity": 0, "SpotAllocationStrategy": "price-capacity-optimized"}}

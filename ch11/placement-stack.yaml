@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Two placement groups and a recovery alarm
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  InstanceId:
+    Type: AWS::EC2::Instance::Id
+Resources:
+  SpreadGroup:
+    Type: AWS::EC2::PlacementGroup
+    Properties:
+      GroupName: !Sub '${Key}-stack-spread'
+      Strategy: spread
+      SpreadLevel: rack
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  PartitionGroup:
+    Type: AWS::EC2::PlacementGroup
+    Properties:
+      GroupName: !Sub '${Key}-stack-partition'
+      Strategy: partition
+      PartitionCount: 3
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  RecoverAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${Key}-stack-recover'
+      Namespace: AWS/EC2
+      MetricName: StatusCheckFailed_System
+      Dimensions:
+        - Name: InstanceId
+          Value: !Ref InstanceId
+      Statistic: Maximum
+      Period: 60
+      EvaluationPeriods: 2
+      Threshold: 0
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions:
+        - !Sub 'arn:aws:automate:${AWS::Region}:ec2:recover'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

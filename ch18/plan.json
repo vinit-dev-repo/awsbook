@@ -1,0 +1,4 @@
+{"ApplicationSource": {"TagFilters": [{"Key": "awsbook", "Values": ["awsbook-ch18"]}]},
+ "ScalingInstructions": [{"ServiceNamespace": "autoscaling", "ResourceId": "autoScalingGroup/awsbook-ch18-asg", "ScalableDimension": "autoscaling:autoScalingGroup:DesiredCapacity",
+   "MinCapacity": 1, "MaxCapacity": 4, "ScalingPolicyUpdateBehavior": "KeepExternalPolicies",
+   "TargetTrackingConfigurations": [{"PredefinedScalingMetricSpecification": {"PredefinedScalingMetricType": "ASGAverageCPUUtilization"}, "TargetValue": 40.0, "EstimatedInstanceWarmup": 60}]}]}

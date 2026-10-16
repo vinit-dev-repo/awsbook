@@ -1,0 +1,35 @@
+Parameters:
+  DbPassword:
+    Type: String
+    NoEcho: true
+Resources:
+  Dev:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      ApplicationName: !Ref Key
+      EnvironmentName: !Sub '${Key}-dev'
+      CNAMEPrefix: !Sub '${Key}-dev'
+      SolutionStackName: !Ref SolutionStack
+      VersionLabel: v1
+      OptionSettings:
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: EnvironmentType
+          Value: SingleInstance
+        - Namespace: aws:rds:dbinstance
+          OptionName: DBEngine
+          Value: postgres
+        - Namespace: aws:rds:dbinstance
+          OptionName: DBInstanceClass
+          Value: db.t4g.micro
+        - Namespace: aws:rds:dbinstance
+          OptionName: DBAllocatedStorage
+          Value: '20'
+        - Namespace: aws:rds:dbinstance
+          OptionName: DBPassword
+          Value: !Ref DbPassword
+        - Namespace: aws:rds:dbinstance
+          OptionName: DBDeletionPolicy
+          Value: Retain
+        - Namespace: aws:rds:dbinstance
+          OptionName: HasCoupledDatabase
+          Value: 'true'

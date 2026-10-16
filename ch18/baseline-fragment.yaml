@@ -1,0 +1,43 @@
+TargetGroup:
+  Type: AWS::ElasticLoadBalancingV2::TargetGroup
+  Properties:
+    Name: !Sub '${Key}-web'
+    Protocol: HTTP
+    Port: 8080
+    VpcId: !Ref VpcId
+    TargetType: instance
+    HealthCheckPath: /health
+    HealthCheckIntervalSeconds: 10
+    HealthyThresholdCount: 2
+    UnhealthyThresholdCount: 2
+    TargetGroupAttributes:
+      - Key: deregistration_delay.timeout_seconds
+        Value: '30'
+    Tags:
+      - Key: awsbook
+        Value: !Ref Key
+Group:
+  Type: AWS::AutoScaling::AutoScalingGroup
+  Properties:
+    AutoScalingGroupName: !Sub '${Key}-asg'
+    LaunchTemplate:
+      LaunchTemplateId: !Ref LaunchTemplate
+      Version: !GetAtt LaunchTemplate.LatestVersionNumber
+    MinSize: '1'
+    MaxSize: '4'
+    DesiredCapacity: '2'
+    VPCZoneIdentifier: !Ref SubnetIds
+    TargetGroupARNs:
+      - !Ref TargetGroup
+    HealthCheckType: ELB
+    HealthCheckGracePeriod: 60
+    DefaultInstanceWarmup: 60
+    MetricsCollection:
+      - Granularity: 1Minute
+    Tags:
+      - Key: awsbook
+        Value: !Ref Key
+        PropagateAtLaunch: true
+      - Key: Name
+        Value: !Sub '${Key}-web'
+        PropagateAtLaunch: true

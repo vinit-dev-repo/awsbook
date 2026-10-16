@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: An IAM Access Analyzer for external access, with this account as the zone of trust
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  Analyzer:
+    Type: AWS::AccessAnalyzer::Analyzer
+    Properties:
+      AnalyzerName: !Sub '${Key}-stack-analyzer'
+      Type: ACCOUNT
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

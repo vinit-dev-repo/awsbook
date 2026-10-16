@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A managed policy, a group that holds it and a user in the group, under the book's boundary
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  ListBucketsPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: !Sub '${Key}-stack-list-buckets'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: ListBuckets
+            Effect: Allow
+            Action:
+              - s3:ListAllMyBuckets
+              - s3:GetBucketLocation
+            Resource: '*'
+  Developers:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Sub '${Key}-stack-developers'
+      ManagedPolicyArns:
+        - !Ref ListBucketsPolicy
+  Bob:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Sub '${Key}-stack-bob'
+      Groups:
+        - !Ref Developers
+      PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/awsbook-permissions-boundary'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

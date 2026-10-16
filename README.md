@@ -12,30 +12,30 @@ A folder appears here when its chapter is certified (every command run three tim
 
 | Folder | Chapter | Present |
 |---|---|---|
-| `ch01` | What cloud computing is | not yet |
-| `ch02` | Getting started with an account | not yet |
+| `ch01` | What cloud computing is | certified; the chapter writes no files |
+| `ch02` | Getting started with an account | [yes](ch02/) |
 | `ch03` | The AWS global infrastructure | not yet |
-| `ch04` | The Well-Architected Framework - thinking like a cloud architect | not yet |
-| `ch05` | The wider AWS service catalogue | not yet |
-| `ch06` | IAM basics - users, groups, policies, MFA and the root user | not yet |
-| `ch07` | IAM roles, policy evaluation and STS | not yet |
-| `ch08` | The CLI and the SDKs | not yet |
-| `ch09` | Advanced identity - Organizations, IAM Identity Center, Cognito and federation | not yet |
+| `ch04` | The Well-Architected Framework - thinking like a cloud architect | certified; the chapter writes no files |
+| `ch05` | The wider AWS service catalogue | [yes](ch05/) |
+| `ch06` | IAM basics - users, groups, policies, MFA and the root user | [yes](ch06/) |
+| `ch07` | IAM roles, policy evaluation and STS | [yes](ch07/) |
+| `ch08` | The CLI and the SDKs | [yes](ch08/) |
+| `ch09` | Advanced identity - Organizations, IAM Identity Center, Cognito and federation | [yes](ch09/) |
 
 ## Part II - AWS Compute
 
 | Folder | Chapter | Present |
 |---|---|---|
-| `ch10` | EC2 basics - launching and reaching an instance | not yet |
-| `ch11` | EC2 purchasing options, Spot, placement groups and instance health | not yet |
-| `ch12` | EC2 at architect level | not yet |
-| `ch13` | Instance storage - EBS and EFS | not yet |
-| `ch14` | Machine images | not yet |
-| `ch15` | Managing instances at scale with Systems Manager | not yet |
-| `ch16` | Elastic Load Balancing | not yet |
-| `ch17` | Auto Scaling Groups | not yet |
-| `ch18` | High availability and scalability patterns | not yet |
-| `ch19` | Elastic Beanstalk and the Spring Boot sample application | not yet |
+| `ch10` | EC2 basics - launching and reaching an instance | [yes](ch10/) |
+| `ch11` | EC2 purchasing options, Spot, placement groups and instance health | [yes](ch11/) |
+| `ch12` | EC2 at architect level | [yes](ch12/) |
+| `ch13` | Instance storage - EBS and EFS | [yes](ch13/) |
+| `ch14` | Machine images | [yes](ch14/) |
+| `ch15` | Managing instances at scale with Systems Manager | [yes](ch15/) |
+| `ch16` | Elastic Load Balancing | [yes](ch16/) |
+| `ch17` | Auto Scaling Groups | [yes](ch17/) |
+| `ch18` | High availability and scalability patterns | [yes](ch18/) |
+| `ch19` | Elastic Beanstalk and the Spring Boot sample application | [yes](ch19/) |
 | `ch20` | The compute catalogue - Batch, Lightsail, Outposts, Wavelength, WorkSpaces and the rest | not yet |
 
 ## Part III - Containers and Serverless on AWS
@@ -187,4 +187,4 @@ A folder appears here when its chapter is certified (every command run three tim
 
 ## How the folders are made
 
-Each chapter writes its files with `cat > FILE <<'EOF' ... EOF` blocks: CloudFormation templates, policy documents, Lambda code, task definitions, scripts. A tool reads the certified chapter and copies every such file here, under the chapter's folder, keeping the sub-folders the chapter's `cd` lines imply. Every folder has its own `README.md` listing its files. Nothing is hand-edited here; when a chapter changes, its folder is regenerated. No file here holds a key, a token, an account id or a password: the chapters create none, and a scan runs before every push.
+Each chapter writes its files in its command blocks: CloudFormation templates, policy documents, Lambda code, task definitions, scripts. Most use `cat > FILE <<'EOF' ... EOF`; some use other end markers, `cat >>` to add to a file, `printf '...' > FILE`, loops or small shell functions. A tool (`_tools/heredoc_repo_files.py` in the tutorial) reads the certified chapter as one shell session and copies every such file here, under the chapter's folder, keeping the sub-folders the chapter's `cd` lines imply. Where a chapter adds to a file over several blocks, the folder holds the finished file; where it rewrites one, the last version. Every folder has its own `README.md`: what the chapter teaches, and for each file the section and the line of the chapter that writes it. A chapter that writes no file (chapters 1 and 4) has no folder. Nothing is hand-edited here; when a chapter changes, its folder is regenerated and a check confirms the folders match the chapters. No file here holds a key, a token, an account id or a password: the chapters create none (sample configurations carry only stand-in defaults that the real setting replaces), and a scan runs before every push.

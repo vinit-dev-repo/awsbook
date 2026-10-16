@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A launch template and an Auto Scaling group with a rolling update policy
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  ImageId:
+    Type: AWS::EC2::Image::Id
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+  SecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+  TargetGroupArn:
+    Type: String
+  PageVersion:
+    Type: String
+    Default: '1'
+Resources:
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Sub '${Key}-stack-lt'
+      TagSpecifications:
+        - ResourceType: launch-template
+          Tags:
+            - Key: awsbook
+              Value: !Ref Key
+      LaunchTemplateData:
+        ImageId: !Ref ImageId
+        InstanceType: t3.micro
+        SecurityGroupIds:
+          - !Ref SecurityGroupId
+        MetadataOptions:
+          HttpTokens: required
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            dnf install -y -q nginx
+            echo "stack version ${PageVersion} on $(hostname)" > /usr/share/nginx/html/index.html
+            cat > /etc/nginx/conf.d/book.conf <<'NG'
+            server {
+              listen 8080;
+              root /usr/share/nginx/html;
+              location /health { return 200 "ok\n"; }
+            }
+            NG
+            systemctl enable --now nginx
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: awsbook
+                Value: !Ref Key
+              - Key: Name
+                Value: !Sub '${Key}-stack-web'
+  Group:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Sub '${Key}-stack-asg'
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+      MinSize: '1'
+      MaxSize: '2'
+      DesiredCapacity: '1'
+      VPCZoneIdentifier: !Ref SubnetIds
+      TargetGroupARNs:
+        - !Ref TargetGroupArn
+      HealthCheckType: ELB
+      HealthCheckGracePeriod: 60
+      DefaultInstanceWarmup: 60
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+          PropagateAtLaunch: true
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MinInstancesInService: 1
+        MaxBatchSize: 1
+        PauseTime: PT2M
+  CpuPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref Group
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: 50
+Outputs:
+  GroupName:
+    Value: !Ref Group

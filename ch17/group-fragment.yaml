@@ -1,0 +1,23 @@
+Group:
+  Type: AWS::AutoScaling::AutoScalingGroup
+  Properties:
+    AutoScalingGroupName: !Sub '${Key}-asg'
+    LaunchTemplate:
+      LaunchTemplateId: !Ref LaunchTemplate
+      Version: !GetAtt LaunchTemplate.LatestVersionNumber
+    MinSize: '1'
+    MaxSize: '4'
+    DesiredCapacity: '2'
+    VPCZoneIdentifier: !Ref SubnetIds
+    TargetGroupARNs:
+      - !Ref TargetGroupArn
+    HealthCheckType: ELB
+    HealthCheckGracePeriod: 60
+    DefaultInstanceWarmup: 60
+    Cooldown: '120'
+    MetricsCollection:
+      - Granularity: 1Minute
+    Tags:
+      - Key: awsbook
+        Value: !Ref Key
+        PropagateAtLaunch: true

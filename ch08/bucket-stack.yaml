@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A bucket for the chapter
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  Files:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${Key}-stack-files'
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+Outputs:
+  BucketName:
+    Value: !Ref Files

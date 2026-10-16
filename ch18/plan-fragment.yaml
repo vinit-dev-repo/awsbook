@@ -1,0 +1,20 @@
+Plan:
+  Type: AWS::AutoScalingPlans::ScalingPlan
+  Properties:
+    ApplicationSource:
+      TagFilters:
+        - Key: awsbook
+          Values:
+            - !Ref Key
+    ScalingInstructions:
+      - ServiceNamespace: autoscaling
+        ResourceId: !Sub 'autoScalingGroup/${Group}'
+        ScalableDimension: autoscaling:autoScalingGroup:DesiredCapacity
+        MinCapacity: 1
+        MaxCapacity: 4
+        ScalingPolicyUpdateBehavior: KeepExternalPolicies
+        TargetTrackingConfigurations:
+          - PredefinedScalingMetricSpecification:
+              PredefinedScalingMetricType: ASGAverageCPUUtilization
+            TargetValue: 40
+            EstimatedInstanceWarmup: 60

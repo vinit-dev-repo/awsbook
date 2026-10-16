@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: One association that waits for its cron time
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  Marker:
+    Type: AWS::SSM::Association
+    Properties:
+      AssociationName: !Sub '${Key}-marker-stack'
+      Name: !Sub '${Key}-state'
+      ScheduleExpression: 'cron(0 4 ? * * *)'
+      ApplyOnlyAtCronInterval: true
+      Targets:
+        - Key: tag:awsbook
+          Values:
+            - !Ref Key
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

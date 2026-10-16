@@ -1,0 +1,38 @@
+ServiceRole:
+  Type: AWS::IAM::Role
+  Properties:
+    RoleName: !Sub '${Key}-service-role'
+    AssumeRolePolicyDocument:
+      Version: '2012-10-17'
+      Statement:
+        - Effect: Allow
+          Principal:
+            Service: elasticbeanstalk.amazonaws.com
+          Action: sts:AssumeRole
+          Condition:
+            StringEquals:
+              sts:ExternalId: elasticbeanstalk
+    ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkEnhancedHealth
+      - arn:aws:iam::aws:policy/AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy
+    Tags:
+      - Key: awsbook
+        Value: !Ref Key
+Application:
+  Type: AWS::ElasticBeanstalk::Application
+  Properties:
+    ApplicationName: !Ref Key
+    ResourceLifecycleConfig:
+      ServiceRole: !GetAtt ServiceRole.Arn
+      VersionLifecycleConfig:
+        MaxCountRule:
+          Enabled: true
+          MaxCount: 1
+          DeleteSourceFromS3: false
+Version:
+  Type: AWS::ElasticBeanstalk::ApplicationVersion
+  Properties:
+    ApplicationName: !Ref Application
+    SourceBundle:
+      S3Bucket: !Ref BundleBucket
+      S3Key: movie-v1.zip

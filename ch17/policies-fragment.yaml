@@ -1,0 +1,43 @@
+CpuPolicy:
+  Type: AWS::AutoScaling::ScalingPolicy
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    PolicyType: TargetTrackingScaling
+    TargetTrackingConfiguration:
+      PredefinedMetricSpecification:
+        PredefinedMetricType: ASGAverageCPUUtilization
+      TargetValue: 40
+StepPolicy:
+  Type: AWS::AutoScaling::ScalingPolicy
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    PolicyType: StepScaling
+    AdjustmentType: PercentChangeInCapacity
+    MetricAggregationType: Average
+    MinAdjustmentMagnitude: 1
+    StepAdjustments:
+      - MetricIntervalLowerBound: 0
+        MetricIntervalUpperBound: 20
+        ScalingAdjustment: 50
+      - MetricIntervalLowerBound: 20
+        ScalingAdjustment: 100
+MondayAction:
+  Type: AWS::AutoScaling::ScheduledAction
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    Recurrence: '0 3 * * 1'
+    TimeZone: Asia/Kolkata
+    MinSize: 1
+    MaxSize: 4
+    DesiredCapacity: 2
+PredictivePolicy:
+  Type: AWS::AutoScaling::ScalingPolicy
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    PolicyType: PredictiveScaling
+    PredictiveScalingConfiguration:
+      Mode: ForecastOnly
+      MetricSpecifications:
+        - TargetValue: 50
+          PredefinedMetricPairSpecification:
+            PredefinedMetricType: ASGCPUUtilization

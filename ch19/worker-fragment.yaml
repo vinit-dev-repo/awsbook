@@ -1,0 +1,14 @@
+Worker:
+  Type: AWS::ElasticBeanstalk::Environment
+  Properties:
+    ApplicationName: !Ref Key
+    EnvironmentName: !Sub '${Key}-worker'
+    SolutionStackName: !Ref SolutionStack
+    VersionLabel: worker-v1
+    Tier:
+      Name: Worker
+      Type: SQS/HTTP
+    OptionSettings:
+      - Namespace: aws:elasticbeanstalk:sqsd
+        OptionName: HttpPath
+        Value: /work

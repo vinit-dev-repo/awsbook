@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: An EC2 Instance Connect Endpoint
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+  GroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+Resources:
+  Endpoint:
+    Type: AWS::EC2::InstanceConnectEndpoint
+    Properties:
+      SubnetId: !Ref SubnetId
+      SecurityGroupIds:
+        - !Ref GroupId
+      Tags:
+        - Key: Name
+          Value: !Sub '${Key}-stack-eice'
+        - Key: awsbook
+          Value: !Ref Key
+Outputs:
+  EndpointId:
+    Value: !Ref Endpoint

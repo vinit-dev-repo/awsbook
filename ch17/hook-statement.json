@@ -1,0 +1,2 @@
+{"Effect": "Allow", "Action": "autoscaling:CompleteLifecycleAction",
+ "Resource": "arn:aws:autoscaling:us-east-1:...:autoScalingGroup:*:autoScalingGroupName/awsbook-ch17-asg"}

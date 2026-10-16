@@ -1,0 +1,28 @@
+WarmPool:
+  Type: AWS::AutoScaling::WarmPool
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    PoolState: Stopped
+    MinSize: 1
+    MaxGroupPreparedCapacity: 3
+MixedGroup:
+  Type: AWS::AutoScaling::AutoScalingGroup
+  Properties:
+    MinSize: '0'
+    MaxSize: '1'
+    DesiredCapacity: '1'
+    CapacityRebalance: true
+    VPCZoneIdentifier: !Ref SubnetIds
+    MixedInstancesPolicy:
+      LaunchTemplate:
+        LaunchTemplateSpecification:
+          LaunchTemplateId: !Ref LaunchTemplate
+          Version: !GetAtt LaunchTemplate.LatestVersionNumber
+        Overrides:
+          - InstanceType: t3.micro
+          - InstanceType: t3a.micro
+          - InstanceType: t3.small
+      InstancesDistribution:
+        OnDemandBaseCapacity: 0
+        OnDemandPercentageAboveBaseCapacity: 0
+        SpotAllocationStrategy: price-capacity-optimized

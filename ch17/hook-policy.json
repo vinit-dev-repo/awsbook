@@ -1,0 +1,1 @@
+{"Version": "2012-10-17", "Statement": [{"Effect": "Allow", "Action": "autoscaling:CompleteLifecycleAction", "Resource": "arn:aws:autoscaling:us-east-1:$ACCOUNT_ID:autoScalingGroup:*:autoScalingGroupName/awsbook-ch17-asg"}]}

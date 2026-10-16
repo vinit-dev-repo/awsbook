@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: One web server with its security group
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+  MyCidr:
+    Type: String
+    AllowedPattern: '^[0-9.]+/32$'
+  LatestAmi:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+Resources:
+  WebGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub '${Key}-stack-web'
+      GroupDescription: web and ssh for the stack
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref MyCidr
+          Description: my computer
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+          Description: anyone
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Web:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmi
+      InstanceType: t3.micro
+      KeyName: !Ref KeyName
+      SubnetId: !Ref SubnetId
+      SecurityGroupIds:
+        - !Ref WebGroup
+      PropagateTagsToVolumeOnCreation: true
+      UserData: !Base64 |
+        #!/bin/bash
+        dnf install -y httpd
+        echo "<h1>hello from $(hostname -f)</h1>" > /var/www/html/index.html
+        systemctl enable --now httpd
+      Tags:
+        - Key: Name
+          Value: !Sub '${Key}-stack-web'
+        - Key: awsbook
+          Value: !Ref Key
+Outputs:
+  PublicDns:
+    Value: !GetAtt Web.PublicDnsName

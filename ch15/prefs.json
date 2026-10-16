@@ -1,0 +1,1 @@
+{"schemaVersion": "1.0", "description": "awsbook-ch15 session preferences", "sessionType": "Standard_Stream", "inputs": {"runAsEnabled": false, "idleSessionTimeout": "20", "shellProfile": {"linux": "cd /tmp && echo \"session started in $(pwd)\""}}}

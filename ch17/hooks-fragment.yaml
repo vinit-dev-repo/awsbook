@@ -1,0 +1,27 @@
+LaunchHook:
+  Type: AWS::AutoScaling::LifecycleHook
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    LifecycleHookName: !Sub '${Key}-launch'
+    LifecycleTransition: autoscaling:EC2_INSTANCE_LAUNCHING
+    HeartbeatTimeout: 300
+    DefaultResult: CONTINUE
+LifecycleRule:
+  Type: AWS::Events::Rule
+  Properties:
+    Name: !Sub '${Key}-lifecycle'
+    EventPattern:
+      source:
+        - aws.autoscaling
+      detail-type:
+        - EC2 Instance-launch Lifecycle Action
+        - EC2 Instance-terminate Lifecycle Action
+      detail:
+        AutoScalingGroupName:
+          - !Sub '${Key}-asg'
+# on the group:
+#   NotificationConfigurations:
+#     - TopicARN: !Ref Topic
+#       NotificationTypes:
+#         - autoscaling:EC2_INSTANCE_LAUNCH
+#         - autoscaling:EC2_INSTANCE_TERMINATE

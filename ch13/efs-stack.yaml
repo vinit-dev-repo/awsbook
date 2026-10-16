@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: An encrypted EFS file system with two mount targets and an access point
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  SubnetA:
+    Type: AWS::EC2::Subnet::Id
+  SubnetB:
+    Type: AWS::EC2::Subnet::Id
+  EfsGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+Resources:
+  FileSystem:
+    Type: AWS::EFS::FileSystem
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      Encrypted: true
+      PerformanceMode: generalPurpose
+      ThroughputMode: elastic
+      LifecyclePolicies:
+        - TransitionToIA: AFTER_30_DAYS
+      FileSystemTags:
+        - Key: Name
+          Value: !Sub '${Key}-stack-fs'
+        - Key: awsbook
+          Value: !Ref Key
+  MountTargetA:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref FileSystem
+      SubnetId: !Ref SubnetA
+      SecurityGroups:
+        - !Ref EfsGroup
+  MountTargetB:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref FileSystem
+      SubnetId: !Ref SubnetB
+      SecurityGroups:
+        - !Ref EfsGroup
+  AccessPoint:
+    Type: AWS::EFS::AccessPoint
+    Properties:
+      FileSystemId: !Ref FileSystem
+      PosixUser:
+        Uid: '1500'
+        Gid: '1500'
+      RootDirectory:
+        Path: /stack
+        CreationInfo:
+          OwnerUid: '1500'
+          OwnerGid: '1500'
+          Permissions: '755'
+      AccessPointTags:
+        - Key: Name
+          Value: !Sub '${Key}-stack-ap'
+        - Key: awsbook
+          Value: !Ref Key

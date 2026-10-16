@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: An encrypted gp3 volume attached to an instance
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  InstanceId:
+    Type: AWS::EC2::Instance::Id
+Resources:
+  DataVolume:
+    Type: AWS::EC2::Volume
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      AvailabilityZone: us-east-1a
+      Size: 1
+      VolumeType: gp3
+      Encrypted: true
+      Tags:
+        - Key: Name
+          Value: !Sub '${Key}-stack-data'
+        - Key: awsbook
+          Value: !Ref Key
+  Attachment:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      InstanceId: !Ref InstanceId
+      VolumeId: !Ref DataVolume
+      Device: /dev/sdj

@@ -1,0 +1,32 @@
+Queue:
+  Type: AWS::SQS::Queue
+  Properties:
+    QueueName: !Sub '${Key}-queue'
+RequestPolicy:
+  Type: AWS::AutoScaling::ScalingPolicy
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    PolicyType: TargetTrackingScaling
+    TargetTrackingConfiguration:
+      PredefinedMetricSpecification:
+        PredefinedMetricType: ALBRequestCountPerTarget
+        ResourceLabel: !Join
+          - /
+          - - !GetAtt LoadBalancer.LoadBalancerFullName
+            - !GetAtt TargetGroup.TargetGroupFullName
+      TargetValue: 100
+BacklogPolicy:
+  Type: AWS::AutoScaling::ScalingPolicy
+  Properties:
+    AutoScalingGroupName: !Ref Group
+    PolicyType: TargetTrackingScaling
+    TargetTrackingConfiguration:
+      CustomizedMetricSpecification:
+        MetricName: BacklogPerInstance
+        Namespace: awsbook/ch18
+        Statistic: Average
+        Unit: None
+        Dimensions:
+          - Name: AutoScalingGroupName
+            Value: !Ref Group
+      TargetValue: 20

@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: One partition placement group
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  ExGroup:
+    Type: AWS::EC2::PlacementGroup
+    Properties:
+      GroupName: !Sub '${Key}-ex-partition'
+      Strategy: partition
+      PartitionCount: 2
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key

@@ -1,0 +1,111 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A component, a recipe, two configurations and a disabled pipeline
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  ProfileName:
+    Type: String
+  SubnetId:
+    Type: AWS::EC2::Subnet::Id
+  GroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+Resources:
+  Page:
+    Type: AWS::ImageBuilder::Component
+    Properties:
+      Name: !Sub '${Key}-stack-page'
+      Version: 1.0.0
+      Platform: Linux
+      SupportedOsVersions:
+        - Amazon Linux 2023
+      Data: |
+        name: awsbook page
+        description: Installs nginx and writes one page
+        schemaVersion: 1.0
+        phases:
+          - name: build
+            steps:
+              - name: InstallNginx
+                action: ExecuteBash
+                inputs:
+                  commands:
+                    - dnf install -y -q nginx
+                    - echo "<h1>built by Image Builder</h1>" > /usr/share/nginx/html/index.html
+                    - systemctl enable nginx
+          - name: validate
+            steps:
+              - name: CheckPage
+                action: ExecuteBash
+                inputs:
+                  commands:
+                    - grep -q "built by Image Builder" /usr/share/nginx/html/index.html
+          - name: test
+            steps:
+              - name: NginxRuns
+                action: ExecuteBash
+                inputs:
+                  commands:
+                    - systemctl is-active nginx
+      Tags:
+        awsbook: !Ref Key
+  Recipe:
+    Type: AWS::ImageBuilder::ImageRecipe
+    Properties:
+      Name: !Sub '${Key}-stack-recipe'
+      Version: 1.0.0
+      ParentImage: !Sub 'arn:aws:imagebuilder:${AWS::Region}:aws:image/amazon-linux-2023-x86/x.x.x'
+      Components:
+        - ComponentArn: !Sub 'arn:aws:imagebuilder:${AWS::Region}:aws:component/update-linux/x.x.x'
+        - ComponentArn: !Sub 'arn:aws:imagebuilder:${AWS::Region}:aws:component/aws-cli-version-2-linux/x.x.x'
+        - ComponentArn: !Ref Page
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 8
+            VolumeType: gp3
+            DeleteOnTermination: true
+      WorkingDirectory: /tmp
+      Tags:
+        awsbook: !Ref Key
+  Infra:
+    Type: AWS::ImageBuilder::InfrastructureConfiguration
+    Properties:
+      Name: !Sub '${Key}-stack-infra'
+      InstanceProfileName: !Ref ProfileName
+      InstanceTypes:
+        - t3.micro
+      SubnetId: !Ref SubnetId
+      SecurityGroupIds:
+        - !Ref GroupId
+      TerminateInstanceOnFailure: true
+      ResourceTags:
+        awsbook: !Ref Key
+      Tags:
+        awsbook: !Ref Key
+  Dist:
+    Type: AWS::ImageBuilder::DistributionConfiguration
+    Properties:
+      Name: !Sub '${Key}-stack-dist'
+      Distributions:
+        - Region: !Ref AWS::Region
+          AmiDistributionConfiguration:
+            Name: !Sub '${Key}-stack-{{imagebuilder:buildDate}}'
+            AmiTags:
+              awsbook: !Ref Key
+              Environment: prod
+      Tags:
+        awsbook: !Ref Key
+  Pipeline:
+    Type: AWS::ImageBuilder::ImagePipeline
+    Properties:
+      Name: !Sub '${Key}-stack-pipeline'
+      ImageRecipeArn: !Ref Recipe
+      InfrastructureConfigurationArn: !Ref Infra
+      DistributionConfigurationArn: !Ref Dist
+      Status: DISABLED
+      ImageTestsConfiguration:
+        ImageTestsEnabled: true
+        TimeoutMinutes: 60
+      Tags:
+        awsbook: !Ref Key

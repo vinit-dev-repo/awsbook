@@ -1,0 +1,18 @@
+[
+  {"Namespace": "aws:ec2:vpc", "OptionName": "VPCId", "Value": "$VPC_ID"},
+  {"Namespace": "aws:ec2:vpc", "OptionName": "Subnets", "Value": "$SUBNET_A,$SUBNET_B"},
+  {"Namespace": "aws:ec2:vpc", "OptionName": "AssociatePublicIpAddress", "Value": "true"},
+  {"Namespace": "aws:elasticbeanstalk:environment", "OptionName": "EnvironmentType", "Value": "SingleInstance"},
+  {"Namespace": "aws:elasticbeanstalk:environment", "OptionName": "ServiceRole", "Value": "awsbook-ch19-service-role"},
+  {"Namespace": "aws:autoscaling:launchconfiguration", "OptionName": "IamInstanceProfile", "Value": "awsbook-ch19-ec2-profile"},
+  {"Namespace": "aws:ec2:instances", "OptionName": "InstanceTypes", "Value": "t3.micro"},
+  {"Namespace": "aws:elasticbeanstalk:healthreporting:system", "OptionName": "SystemType", "Value": "enhanced"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "DBEngine", "Value": "postgres"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "DBEngineVersion", "Value": "$PG_VERSION"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "DBInstanceClass", "Value": "db.t4g.micro"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "DBAllocatedStorage", "Value": "20"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "DBUser", "Value": "ebroot"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "DBPassword", "Value": "$P"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "DBDeletionPolicy", "Value": "Retain"},
+  {"Namespace": "aws:rds:dbinstance", "OptionName": "HasCoupledDatabase", "Value": "true"}
+]

@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A security group that allows EC2 Instance Connect from its prefix list
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  PrefixListId:
+    Type: String
+    AllowedPattern: '^pl-[0-9a-f]+$'
+Resources:
+  Group:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub '${Key}-stack-eic'
+      GroupDescription: EC2 Instance Connect from the managed prefix list
+      VpcId: !Ref VpcId
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
+  Rule:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !GetAtt Group.GroupId
+      IpProtocol: tcp
+      FromPort: 22
+      ToPort: 22
+      SourcePrefixListId: !Ref PrefixListId
+      Description: EC2 Instance Connect

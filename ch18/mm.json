@@ -1,0 +1,5 @@
+{"CustomizedMetricSpecification": {"Metrics": [
+  {"Label": "queue size", "Id": "m1", "MetricStat": {"Metric": {"MetricName": "ApproximateNumberOfMessagesVisible", "Namespace": "AWS/SQS", "Dimensions": [{"Name": "QueueName", "Value": "awsbook-ch18-queue"}]}, "Stat": "Sum"}, "ReturnData": false},
+  {"Label": "group size", "Id": "m2", "MetricStat": {"Metric": {"MetricName": "GroupInServiceInstances", "Namespace": "AWS/AutoScaling", "Dimensions": [{"Name": "AutoScalingGroupName", "Value": "awsbook-ch18-asg"}]}, "Stat": "Average"}, "ReturnData": false},
+  {"Label": "backlog per instance", "Id": "e1", "Expression": "m1 / m2", "ReturnData": true}]},
+ "TargetValue": 20}

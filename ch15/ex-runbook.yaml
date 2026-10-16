@@ -1,0 +1,7 @@
+schemaVersion: '0.3'
+description: Wait two seconds
+mainSteps:
+  - name: wait
+    action: aws:sleep
+    inputs:
+      Duration: PT2S

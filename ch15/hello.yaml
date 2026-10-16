@@ -1,0 +1,14 @@
+schemaVersion: '2.2'
+description: Print a greeting, the host name and the uptime of the node
+parameters:
+  Greeting:
+    type: String
+    description: The word to print
+    default: hello
+mainSteps:
+  - action: aws:runShellScript
+    name: greet
+    inputs:
+      runCommand:
+        - echo "{{ Greeting }} from $(hostname)"
+        - uptime -p

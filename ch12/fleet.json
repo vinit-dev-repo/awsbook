@@ -1,0 +1,22 @@
+{
+  "LaunchTemplateConfigs": [
+    {
+      "LaunchTemplateSpecification": {
+        "LaunchTemplateId": "$LT_ID",
+        "Version": "\$Latest"
+      },
+      "Overrides": [
+        { "InstanceType": "t3.micro", "SubnetId": "$SUBNET_ID" },
+        { "InstanceType": "t3a.micro", "SubnetId": "$SUBNET_ID" },
+        { "InstanceType": "t3.micro", "SubnetId": "$SUBNET_B" },
+        { "InstanceType": "t3a.micro", "SubnetId": "$SUBNET_B" }
+      ]
+    }
+  ],
+  "TargetCapacitySpecification": {
+    "TotalTargetCapacity": 1,
+    "DefaultTargetCapacityType": "spot"
+  },
+  "SpotOptions": { "AllocationStrategy": "price-capacity-optimized" },
+  "Type": "instant"
+}

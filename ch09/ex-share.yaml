@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A second resource share
+Parameters:
+  Key:
+    Type: String
+    AllowedPattern: '^awsbook-[a-z0-9-]+$'
+Resources:
+  Share:
+    Type: AWS::RAM::ResourceShare
+    Properties:
+      Name: !Sub '${Key}-ex-share'
+      AllowExternalPrincipals: false
+      Tags:
+        - Key: awsbook
+          Value: !Ref Key
