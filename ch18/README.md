@@ -1,6 +1,6 @@
-# 18 - High availability and scalability patterns
+# 18 - What scales and survives, and a baseline that survives a zone; Scaling on the right signal and one plan for many resources; When it does not scale, the layers of a stack and cleaning up
 
-The files the chapter **18 - High availability and scalability patterns** of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch18`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the section heading and the line where the file's text starts.
+The files the chapter **18**, in its parts **18.1 - What scales and survives, and a baseline that survives a zone**, **18.2 - Scaling on the right signal and one plan for many resources** and **18.3 - When it does not scale, the layers of a stack and cleaning up**, of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch18`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the part, the section heading and the line in that part where the file's text starts.
 
 ## What this chapter teaches
 
@@ -16,14 +16,14 @@ The files the chapter **18 - High availability and scalability patterns** of the
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `trust-ec2.json` | The baseline that survives a zone › With the CLI (line 202) |  |
-| `user-data.sh` | The baseline that survives a zone › With the CLI (line 272) |  |
-| `lt.json` | The baseline that survives a zone › With the CLI (line 288) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `baseline-fragment.yaml` | The baseline that survives a zone › With CloudFormation (line 387) |  |
-| `rq.json` | Scaling on the right signal › With the CLI (line 511) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `bl.json` | Scaling on the right signal › With the CLI (line 560) |  |
-| `mm.json` | Scaling on the right signal › With the CLI (line 625) |  |
-| `scaling-fragment.yaml` | Scaling on the right signal › With CloudFormation (line 676) |  |
-| `plan.json` | One plan for many resources › With the CLI (line 748) |  |
-| `plan-fragment.yaml` | One plan for many resources › With CloudFormation (line 808) |  |
-| `alarm-fragment.yaml` | When it does not scale › With CloudFormation (line 1075) |  |
+| `trust-ec2.json` | 18.1 › The baseline that survives a zone › With the CLI (line 214) |  |
+| `user-data.sh` | 18.1 › The baseline that survives a zone › With the CLI (line 284) |  |
+| `lt.json` | 18.1 › The baseline that survives a zone › With the CLI (line 300) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `baseline-fragment.yaml` | 18.1 › The baseline that survives a zone › With CloudFormation (line 393) |  |
+| `rq.json` | 18.2 › Scaling on the right signal › With the CLI (line 142) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `bl.json` | 18.2 › Scaling on the right signal › With the CLI (line 191) |  |
+| `mm.json` | 18.2 › Scaling on the right signal › With the CLI (line 253) |  |
+| `scaling-fragment.yaml` | 18.2 › Scaling on the right signal › With CloudFormation (line 296) |  |
+| `plan.json` | 18.2 › One plan for many resources › With the CLI (line 379) |  |
+| `plan-fragment.yaml` | 18.2 › One plan for many resources › With CloudFormation (line 432) |  |
+| `alarm-fragment.yaml` | 18.3 › When it does not scale › With CloudFormation (line 295) |  |
