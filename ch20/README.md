@@ -1,6 +1,6 @@
-# 20 - The compute catalogue - Batch, Lightsail, Outposts, Wavelength, WorkSpaces and the rest
+# 20 - The catalogue, edge and hybrid compute, and Lightsail; AWS Batch, high performance computing and WorkSpaces; AppConfig and Signer, and email, devices and conversations; Integration and console tools, one stack, and cleaning up
 
-The files the chapter **20 - The compute catalogue - Batch, Lightsail, Outposts, Wavelength, WorkSpaces and the rest** of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch20`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the section heading and the line where the file's text starts.
+The files the chapter **20**, in its parts **20.1 - The catalogue, edge and hybrid compute, and Lightsail**, **20.2 - AWS Batch, high performance computing and WorkSpaces**, **20.3 - AppConfig and Signer, and email, devices and conversations** and **20.4 - Integration and console tools, one stack, and cleaning up**, of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch20`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the part, the section heading and the line in that part where the file's text starts.
 
 ## What this chapter teaches
 
@@ -17,17 +17,17 @@ The files the chapter **20 - The compute catalogue - Batch, Lightsail, Outposts,
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `catalogue.yaml` | Lightsail: servers with a fixed price › With CloudFormation (line 560) | the chapter adds to it in later blocks |
-| `trust-ecs-tasks.json` | AWS Batch: jobs, queues and compute › With the CLI (line 650) |  |
-| `jobdef.json` | AWS Batch: jobs, queues and compute › With the CLI (line 702) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `flags-v1.json` | Configuration and code trust: AppConfig and Signer › With the CLI (line 1282) |  |
-| `flags-v2.json` | Configuration and code trust: AppConfig and Signer › With the CLI (line 1321) |  |
-| `trust-iot.json` | Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 1608) |  |
-| `iot-sqs.json` | Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 1612) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `rule.json` | Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 1628) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `trust-lex.json` | Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 1672) |  |
-| `lex-polly.json` | Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 1676) |  |
-| `people.csv` | Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 1904) | written with printf |
-| `flow-bucket-policy.json` | Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 1918) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `tasks.json` | Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 1924) |  |
-| `destinations.json` | Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 1929) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `catalogue.yaml` | 20.1 › Lightsail: servers with a fixed price › With CloudFormation (line 563) | the chapter adds to it in later blocks |
+| `trust-ecs-tasks.json` | 20.2 › AWS Batch: jobs, queues and compute › With the CLI (line 121) |  |
+| `jobdef.json` | 20.2 › AWS Batch: jobs, queues and compute › With the CLI (line 170) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `flags-v1.json` | 20.3 › Configuration and code trust: AppConfig and Signer › With the CLI (line 105) |  |
+| `flags-v2.json` | 20.3 › Configuration and code trust: AppConfig and Signer › With the CLI (line 142) |  |
+| `trust-iot.json` | 20.3 › Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 441) |  |
+| `iot-sqs.json` | 20.3 › Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 445) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `rule.json` | 20.3 › Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 460) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `trust-lex.json` | 20.3 › Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 506) |  |
+| `lex-polly.json` | 20.3 › Email, devices and conversations: SES, IoT Core, Lex and Connect › With the CLI (line 510) |  |
+| `people.csv` | 20.4 › Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 108) | written with printf |
+| `flow-bucket-policy.json` | 20.4 › Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 121) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `tasks.json` | 20.4 › Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 127) |  |
+| `destinations.json` | 20.4 › Integration, hosting and console tools: AppFlow, Amplify, Tag Editor, CloudShell, Device Farm, Pinpoint and Ground Station › With the CLI (line 132) | a template: the shell fills in $VARIABLES when the chapter runs it |
