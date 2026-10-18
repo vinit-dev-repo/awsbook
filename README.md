@@ -42,7 +42,7 @@ A folder appears here when its chapter is certified (every command run three tim
 
 | Folder | Chapter | Present |
 |---|---|---|
-| `ch21` | Docker fundamentals (pointer to the Docker or Kubernetes module) | not yet |
+| `ch21` | Docker fundamentals (pointer to the Docker or Kubernetes module) | certified; the chapter writes no files |
 | `ch22` | ECS clusters, task definitions and networking modes | not yet |
 | `ch23` | ECS services, load balancing, auto scaling and logging | not yet |
 | `ch24` | The container registry | not yet |

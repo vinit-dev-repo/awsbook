@@ -1,6 +1,6 @@
-# 16 - Elastic Load Balancing
+# 16 - What a load balancer is, target groups and Application Load Balancer rules; Stickiness, headers, logs, zonal shift and HTTPS; Network and Gateway Load Balancers and cleaning up
 
-The files the chapter **16 - Elastic Load Balancing** of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch16`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the section heading and the line where the file's text starts.
+The files the chapter **16**, in its parts **16.1 - What a load balancer is, target groups and Application Load Balancer rules**, **16.2 - Stickiness, headers, logs, zonal shift and HTTPS** and **16.3 - Network and Gateway Load Balancers and cleaning up**, of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch16`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the part, the section heading and the line in that part where the file's text starts.
 
 ## What this chapter teaches
 
@@ -17,9 +17,9 @@ The files the chapter **16 - Elastic Load Balancing** of the AWS tutorial writes
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `user-data.sh` | Target groups and health checks › With the CLI (line 304) |  |
-| `transform.json` | An Application Load Balancer and its listener rules › With the CLI (line 693) |  |
-| `alb-stack.yaml` | An Application Load Balancer and its listener rules › With CloudFormation (line 762) |  |
-| `log-policy.json` | Stickiness, cross-zone, headers, timeouts, logs and a zonal shift › With the CLI (line 1140) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `jwt-actions.json` | HTTPS at the load balancer › With the CLI (line 1512) |  |
-| `nlb-stack.yaml` | A Network Load Balancer › With CloudFormation (line 1792) |  |
+| `user-data.sh` | 16.1 › Target groups and health checks › With the CLI (line 341) |  |
+| `transform.json` | 16.1 › An Application Load Balancer and its listener rules › With the CLI (line 744) |  |
+| `alb-stack.yaml` | 16.1 › An Application Load Balancer and its listener rules › With CloudFormation (line 805) |  |
+| `log-policy.json` | 16.2 › Stickiness, cross-zone, headers, timeouts, logs and a zonal shift › With the CLI (line 310) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `jwt-actions.json` | 16.2 › HTTPS at the load balancer › With the CLI (line 692) |  |
+| `nlb-stack.yaml` | 16.3 › A Network Load Balancer › With CloudFormation (line 323) |  |
