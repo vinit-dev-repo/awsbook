@@ -1,6 +1,6 @@
-# 17 - Auto Scaling Groups
+# 17 - What a group is, the group behind a balancer and keeping it healthy; Scaling policies and lifecycle hooks; Instance refresh, warm pools, a rolling update and cleaning up
 
-The files the chapter **17 - Auto Scaling Groups** of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch17`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the section heading and the line where the file's text starts.
+The files the chapter **17**, in its parts **17.1 - What a group is, the group behind a balancer and keeping it healthy**, **17.2 - Scaling policies and lifecycle hooks** and **17.3 - Instance refresh, warm pools, a rolling update and cleaning up**, of the AWS tutorial writes in its command blocks, copied byte for byte from the chapter. The blocks write them into the work folder `~/awsbook-ch17`; cloning this folder there gives the same files. The chapter explains every line; the table says where each file is written: the part, the section heading and the line in that part where the file's text starts.
 
 ## What this chapter teaches
 
@@ -17,19 +17,19 @@ The files the chapter **17 - Auto Scaling Groups** of the AWS tutorial writes in
 
 | File | Where it is in the chapter | Note |
 |---|---|---|
-| `trust-ec2.json` | The launch template and the group behind the balancer › With the CLI (line 226) |  |
-| `hook-policy.json` | The launch template and the group behind the balancer › With the CLI (line 231) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `hook-statement.json` | The launch template and the group behind the balancer › With the CLI (line 252) |  |
-| `user-data.sh` | The launch template and the group behind the balancer › With the CLI (line 296) |  |
-| `lt.json` | The launch template and the group behind the balancer › With the CLI (line 322) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `group-fragment.yaml` | The launch template and the group behind the balancer › With CloudFormation (line 445) |  |
-| `tt.json` | Scaling policies › With the CLI (line 893) |  |
-| `predictive.json` | Scaling policies › With the CLI (line 1005) |  |
-| `policies-fragment.yaml` | Scaling policies › With CloudFormation (line 1070) |  |
-| `hooks-fragment.yaml` | Lifecycle hooks and notifications › With CloudFormation (line 1300) |  |
-| `lt2.json` | Instance refresh › With the CLI (line 1408) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `refresh-fragment.yaml` | Instance refresh › With CloudFormation (line 1476) |  |
-| `mixed.json` | Warm pools, mixed instances and Spot › With the CLI (line 1597) | a template: the shell fills in $VARIABLES when the chapter runs it |
-| `pool-fragment.yaml` | Warm pools, mixed instances and Spot › With CloudFormation (line 1666) |  |
-| `asg-stack.yaml` | The stack with a rolling update › With the CLI (line 1739) |  |
-| `ex-tt.json` | Try it yourself (line 2166) |  |
+| `trust-ec2.json` | 17.1 › The launch template and the group behind the balancer › With the CLI (line 239) |  |
+| `hook-policy.json` | 17.1 › The launch template and the group behind the balancer › With the CLI (line 244) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `hook-statement.json` | 17.1 › The launch template and the group behind the balancer › With the CLI (line 264) |  |
+| `user-data.sh` | 17.1 › The launch template and the group behind the balancer › With the CLI (line 307) |  |
+| `lt.json` | 17.1 › The launch template and the group behind the balancer › With the CLI (line 333) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `group-fragment.yaml` | 17.1 › The launch template and the group behind the balancer › With CloudFormation (line 452) |  |
+| `tt.json` | 17.2 › Scaling policies › With the CLI (line 212) |  |
+| `predictive.json` | 17.2 › Scaling policies › With the CLI (line 326) |  |
+| `policies-fragment.yaml` | 17.2 › Scaling policies › With CloudFormation (line 382) |  |
+| `hooks-fragment.yaml` | 17.2 › Lifecycle hooks and notifications › With CloudFormation (line 623) |  |
+| `lt2.json` | 17.3 › Instance refresh › With the CLI (line 128) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `refresh-fragment.yaml` | 17.3 › Instance refresh › With CloudFormation (line 191) |  |
+| `mixed.json` | 17.3 › Warm pools, mixed instances and Spot › With the CLI (line 328) | a template: the shell fills in $VARIABLES when the chapter runs it |
+| `pool-fragment.yaml` | 17.3 › Warm pools, mixed instances and Spot › With CloudFormation (line 389) |  |
+| `asg-stack.yaml` | 17.3 › The stack with a rolling update › With the CLI (line 474) |  |
+| `ex-tt.json` | 17.3 › Try it yourself (line 891) |  |
